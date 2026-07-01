@@ -1,0 +1,37 @@
+/* Full page */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #eaeded;
+  font-family: Arial, sans-serif;
+}
+
+/* Home container */
+.home-container {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Product grid */
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  padding: 40px 20px;
+}
+
+/* Loading text */
+.loading {
+  text-align: center;
+  font-size: 24px;
+  margin-top: 50px;
+}
+
+/* No products found */
+.no-products {
+  text-align: center;
+  font-size: 22px;
+  color: gray;
+  margin-top: 40px;
+}

@@ -1,0 +1,48 @@
+.register-page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #131921, #232f3e);
+}
+
+.register-box {
+  background: white;
+  padding: 40px;
+  width: 350px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+.register-box h1 {
+  margin-bottom: 25px;
+  color: #232f3e;
+}
+
+.register-box input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.register-box button {
+  width: 100%;
+  padding: 12px;
+  background: #ff9900;
+  border: none;
+  color: white;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.register-box button:hover {
+  background: #e68a00;
+}
+.register-box p {
+  margin-top: 20px;   /* jitna niche chahiye utna badhao */
+  text-align: center;
+}
