@@ -1,6 +1,4 @@
-import api from "../api/axiosConfig";
-
-api.get("/api/admin/orders")
+import axios from "axios";
 
 const api = axios.create({
   baseURL: "https://ecommerce-backend-production-075f.up.railway.app"

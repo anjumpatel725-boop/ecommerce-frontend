@@ -23,10 +23,11 @@ export default function Login() {
       }
     );
 
-    console.log("STATUS:", response.status);
+    console.log("STATUS =", response.status);
+console.log("OK =", response.ok);
 
-    const text = await response.text();
-    console.log("RAW RESPONSE:", text);
+const text = await response.text();
+console.log("RAW RESPONSE =", text);
 
   } catch (error) {
     console.log("LOGIN ERROR:", error);
