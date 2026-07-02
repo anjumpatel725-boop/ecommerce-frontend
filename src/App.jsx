@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {Routes, Route, Navigate } from "react-router-dom";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -30,7 +30,7 @@ function AdminRoute({ children }) {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
 
@@ -75,6 +75,6 @@ export default function App() {
           }
         />
       </Routes>
-    </BrowserRouter>
+    
   );
 }
