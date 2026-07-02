@@ -30,18 +30,51 @@ function AdminRoute({ children }) {
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to="/login" />} />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
 
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-      <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
-      <Route path="/cart" element={<PrivateRoute><Cart /></PrivateRoute>} />
-      <Route path="/orders" element={<PrivateRoute><Orders /></PrivateRoute>} />
+        <Route
+          path="/home"
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
 
-      <Route path="/admin-login" element={<AdminLogin />} />
-      <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
-    </Routes>
+        <Route
+          path="/cart"
+          element={
+            <PrivateRoute>
+              <Cart />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/orders"
+          element={
+            <PrivateRoute>
+              <Orders />
+            </PrivateRoute>
+          }
+        />
+
+        <Route path="/admin-login" element={<AdminLogin />} />
+
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
