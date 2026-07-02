@@ -11,7 +11,7 @@ export default function Cart() {
     try {
       const token = localStorage.getItem("token");
 
-      const res = await fetch(`http://localhost:8080/api/cart/${userId}`, {
+      const res = await fetch(`https://ecommerce-backend-production-075f.up.railway.app/api/cart/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -36,7 +36,7 @@ export default function Cart() {
   const removeItem = async (cartId) => {
   const token = localStorage.getItem("token");
 
-  await fetch(`http://localhost:8080/api/cart/${cartId}`, {
+  await fetch(`https://ecommerce-backend-production-075f.up.railway.app/api/cart/${cartId}`, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`
@@ -52,7 +52,7 @@ export default function Cart() {
   const placeOrder = async () => {
   const token = localStorage.getItem("token");
 
-  const res = await fetch(`http://localhost:8080/api/orders/${userId}`, {
+  const res = await fetch(`https://ecommerce-backend-production-075f.up.railway.app/api/orders/${userId}`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`

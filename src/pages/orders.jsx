@@ -14,7 +14,7 @@ export default function Orders() {
       console.log("Token:", token);
       console.log("User ID:", userId);
 
-      const res = await fetch(`http://localhost:8080/api/orders/${userId}`, {
+      const res = await fetch(`https://ecommerce-backend-production-075f.up.railway.app/api/orders/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

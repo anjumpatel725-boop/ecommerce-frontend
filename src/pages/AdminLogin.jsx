@@ -15,7 +15,7 @@ export default function AdminLogin() {
 
     try {
       const res = await axios.post(
-        "http://localhost:8080/api/auth/login",
+        "https://ecommerce-backend-production-075f.up.railway.app/api/auth/login",
         {
           email,
           password

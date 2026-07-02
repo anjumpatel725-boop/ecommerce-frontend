@@ -20,7 +20,7 @@ export default function Navbar() {
 
     const token = localStorage.getItem("token");
 
-    const res = await fetch(`http://localhost:8080/api/cart/${userId}`, {
+    const res = await fetch(`https://ecommerce-backend-production-075f.up.railway.app/api/cart/${userId}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }

@@ -47,7 +47,7 @@ export default function AdminDashboard() {
 
  const loadProducts = async () => {
   try {
-    const res = await axios.get("http://localhost:8080/api/products");
+    const res = await axios.get("https://ecommerce-backend-production-075f.up.railway.app/api/products");
 
     setProducts(res.data);
     setTotalProducts(res.data.length);
@@ -69,14 +69,14 @@ export default function AdminDashboard() {
     };
 
     const userRes = await axios.get(
-      "http://localhost:8080/api/admin/users",
+      "https://ecommerce-backend-production-075f.up.railway.app/api/admin/users",
       config
     );
 
     console.log("Users:", userRes.data);
 
     const orderRes = await axios.get(
-      "http://localhost:8080/api/admin/orders",
+      "https://ecommerce-backend-production-075f.up.railway.app/api/admin/orders",
       config
     );
 
@@ -90,7 +90,7 @@ export default function AdminDashboard() {
   }
 };
   const addProduct = async () => {
-    await axios.post("http://localhost:8080/api/products", form);
+    await axios.post("https://ecommerce-backend-production-075f.up.railway.app/api/products", form);
 
     setForm({
       name: "",
@@ -104,13 +104,13 @@ export default function AdminDashboard() {
   };
 
   const deleteProduct = async (id) => {
-    await axios.delete(`http://localhost:8080/api/products/${id}`);
+    await axios.delete(`https://ecommerce-backend-production-075f.up.railway.app/api/products/${id}`);
     loadData();
   };
 
   const updateProduct = async () => {
     await axios.put(
-      `http://localhost:8080/api/products/${editProduct.id}`,
+      `https://ecommerce-backend-production-075f.up.railway.app/api/products/${editProduct.id}`,
       editProduct
     );
     setEditProduct(null);
@@ -122,7 +122,7 @@ export default function AdminDashboard() {
     const token = localStorage.getItem("token");
 
     await axios.put(
-      `http://localhost:8080/api/admin/orders/${id}/status?status=${status}`,
+      `https://ecommerce-backend-production-075f.up.railway.app/api/admin/orders/${id}/status?status=${status}`,
       {},
       {
         headers: {
@@ -184,7 +184,7 @@ const downloadExcel = async () => {
     const token = localStorage.getItem("token");
 
     const res = await axios.get(
-      "http://localhost:8080/api/admin/orders/export/excel",
+      "https://ecommerce-backend-production-075f.up.railway.app/api/admin/orders/export/excel",
       {
         responseType: "blob",
         headers: {

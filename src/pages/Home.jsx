@@ -15,10 +15,10 @@ export default function Home() {
     const params = new URLSearchParams(location.search);
     const search = params.get("search");
 
-    let url = "http://localhost:8080/api/products";
+    let url = "https://ecommerce-backend-production-075f.up.railway.app/api/products";
 
     if (search && search.trim() !== "") {
-      url = `http://localhost:8080/api/products/filter?keyword=${search}`;
+      url = `https://ecommerce-backend-production-075f.up.railway.app/api/products/filter?keyword=${search}`;
     }
 
     fetch(url)

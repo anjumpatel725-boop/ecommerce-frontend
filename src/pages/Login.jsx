@@ -9,45 +9,27 @@ export default function Login() {
 
   const handleLogin = async () => {
   try {
-   const response = await fetch(
-  "https://ecommerce-backend-production-075f.up.railway.app/api/auth/login",
-  {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      email: email.trim(),
-      password: password.trim()
-    })
-  }
-);
-    const user = await response.json();
+    const response = await fetch(
+      "https://ecommerce-backend-production-075f.up.railway.app/api/auth/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: email.trim(),
+          password: password.trim()
+        })
+      }
+    );
 
-    console.log("LOGIN RESPONSE:", user);
+    console.log("STATUS:", response.status);
 
-    if (!user || user.status !== "SUCCESS") {
-      alert("Invalid Email or Password");
-      return;
-    }
-
-    localStorage.setItem("token", user.token);
-    localStorage.setItem("isLoggedIn", "true");
-    localStorage.setItem("userId", user.userId);
-    localStorage.setItem("userName", user.name);
-    localStorage.setItem("userRole", user.role);
-
-    alert("Login Successful");
-
-    if (user.role === "ROLE_ADMIN") {
-      navigate("/admin");
-    } else {
-      navigate("/home");
-    }
+    const text = await response.text();
+    console.log("RAW RESPONSE:", text);
 
   } catch (error) {
     console.log("LOGIN ERROR:", error);
-    alert("Server Error");
   }
 };
 

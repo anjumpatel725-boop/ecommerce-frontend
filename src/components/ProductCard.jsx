@@ -12,7 +12,7 @@ export default function ProductCard({ product }) {
       }
 
       const response = await fetch(
-        `http://localhost:8080/api/cart/add?userId=${userId}&productId=${product.id}&quantity=1`,
+        `https://ecommerce-backend-production-075f.up.railway.app/api/cart/add?userId=${userId}&productId=${product.id}&quantity=1`,
         {
           method: "POST",
           headers: {
