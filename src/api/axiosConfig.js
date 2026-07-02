@@ -3,7 +3,7 @@ import api from "../api/axiosConfig";
 api.get("/api/admin/orders")
 
 const api = axios.create({
-  baseURL: "http://localhost:8080"
+  baseURL: "https://ecommerce-backend-production-075f.up.railway.app"
 });
 
 api.interceptors.request.use(
