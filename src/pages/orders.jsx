@@ -1,7 +1,7 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
-import "../styles/Orders.css";
+import "../styles/orders.css";
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
