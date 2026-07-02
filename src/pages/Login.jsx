@@ -9,7 +9,8 @@ export default function Login() {
 
   const handleLogin = async () => {
   try {
-    const response = await fetch("https://your-backend.up.railway.app/api/auth/login", {
+   const response = await fetch(
+  "https://ecommerce-backend-production-b787.up.railway.app/api/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
