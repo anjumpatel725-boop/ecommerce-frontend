@@ -10,17 +10,18 @@ export default function Login() {
   const handleLogin = async () => {
   try {
    const response = await fetch(
-  "https://ecommerce-backend-production-b787.up.railway.app/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        email: email.trim(),
-        password: password.trim()
-      })
-    });
-
+  "https://ecommerce-backend-production-087a.up.railway.app/api/auth/login",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      email: email.trim(),
+      password: password.trim()
+    })
+  }
+);
     const user = await response.json();
 
     console.log("LOGIN RESPONSE:", user);
