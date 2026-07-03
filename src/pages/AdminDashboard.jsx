@@ -92,14 +92,14 @@ export default function AdminDashboard() {
   const addProduct = async () => {
     await axios.post("https://ecommerce-backend-production-075f.up.railway.app/api/products", form);
 
-    setForm({
-      name: "",
-      description: "",
-      price: "",
-      stockQuantity: "",
-      imageUrl: ""
-    });
-
+    const [form, setForm] = useState({
+  name:"",
+  description:"",
+  price:"",
+  stockQuantity:"",
+  imageUrl:"",
+  categoryId:1
+});
     loadData();
   };
 
@@ -140,11 +140,14 @@ export default function AdminDashboard() {
 };
 
   const logout = () => {
-    localStorage.removeItem("role");
-    localStorage.removeItem("userRole");
-    window.location.href = "/admin-login";
-  };
+  localStorage.removeItem("token");
+  localStorage.removeItem("userRole");
+  localStorage.removeItem("userId");
+  localStorage.removeItem("userName");
+  localStorage.removeItem("isLoggedIn");
 
+  window.location.href = "/admin-login";
+};
   const totalRevenue = orders.reduce(
     (sum, order) => sum + Number(order.totalAmount || 0),
     0
