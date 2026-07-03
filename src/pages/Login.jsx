@@ -23,14 +23,27 @@ export default function Login() {
       }
     );
 
-    console.log("STATUS =", response.status);
-console.log("OK =", response.ok);
+    const user = await response.json();
+    console.log("LOGIN RESPONSE =", user);
 
-const text = await response.text();
-console.log("RAW RESPONSE =", text);
+    if (!response.ok) {
+      alert("Invalid Email or Password");
+      return;
+    }
+
+    localStorage.setItem("token", user.token);
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("userRole", user.role);
+
+    if (user.role === "ROLE_ADMIN") {
+      navigate("/admin");
+    } else {
+      navigate("/home");
+    }
 
   } catch (error) {
     console.log("LOGIN ERROR:", error);
+    alert("Server Error");
   }
 };
 
