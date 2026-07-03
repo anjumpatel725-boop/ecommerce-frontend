@@ -54,13 +54,13 @@ console.log("RAW RESPONSE =", text);
         />
 
         <button
-  onClick={() => {
+        onClick={() => {
     console.log("LOGIN BUTTON CLICKED");
     handleLogin();
   }}
 >
   Login
-</button>
+  </button>
 
         <p>
           New user? <Link to="/register">Register</Link>
