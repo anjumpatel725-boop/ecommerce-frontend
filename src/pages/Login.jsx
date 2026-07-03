@@ -23,26 +23,20 @@ export default function Login() {
       }
     );
 
-    const user = await response.json();
-    console.log("LOGIN RESPONSE =", user);
+    const data = await response.json();
+    console.log(data);
 
-    if (!response.ok) {
-      alert("Invalid Email or Password");
-      return;
-    }
+    if (response.ok) {
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("userRole", data.role);
 
-    localStorage.setItem("token", user.token);
-    localStorage.setItem("isLoggedIn", "true");
-    localStorage.setItem("userRole", user.role);
-
-    if (user.role === "ROLE_ADMIN") {
-      navigate("/admin");
-    } else {
       navigate("/home");
+    } else {
+      alert("Login failed");
     }
 
   } catch (error) {
-    console.log("LOGIN ERROR:", error);
+    console.log(error);
     alert("Server Error");
   }
 };
