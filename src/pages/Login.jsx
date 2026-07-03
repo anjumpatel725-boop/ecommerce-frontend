@@ -31,6 +31,10 @@ if (data.status === "SUCCESS") {
   localStorage.setItem("isLoggedIn", "true");
   localStorage.setItem("userRole", data.role);
 
+  // IMPORTANT
+  localStorage.setItem("userId", data.userId);
+  localStorage.setItem("userName", data.name);
+
   navigate("/home");
 } else {
   alert("Invalid credentials");
