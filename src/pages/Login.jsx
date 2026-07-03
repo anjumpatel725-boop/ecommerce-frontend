@@ -53,14 +53,16 @@ console.log("RAW RESPONSE =", text);
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button
-        onClick={() => {
-    console.log("LOGIN BUTTON CLICKED");
-    handleLogin();
+       <button
+  style={{
+    padding: "20px",
+    background: "red",
+    color: "white"
   }}
+  onClick={() => alert("WORKING")}
 >
   Login
-  </button>
+</button>
 
         <p>
           New user? <Link to="/register">Register</Link>
