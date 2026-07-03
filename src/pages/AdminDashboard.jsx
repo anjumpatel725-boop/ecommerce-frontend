@@ -27,12 +27,13 @@ export default function AdminDashboard() {
   const [totalPages, setTotalPages] = useState(0);
 
   const [form, setForm] = useState({
-    name: "",
-    description: "",
-    price: "",
-    stockQuantity: "",
-    imageUrl: ""
-  });
+  name: "",
+  description: "",
+  price: "",
+  stockQuantity: "",
+  imageUrl: "",
+  categoryId: 1
+});
   
 
   const [editProduct, setEditProduct] = useState(null);
@@ -90,18 +91,50 @@ export default function AdminDashboard() {
   }
 };
   const addProduct = async () => {
-    await axios.post("https://ecommerce-backend-production-075f.up.railway.app/api/products", form);
+  try {
+    const token = localStorage.getItem("token");
 
-    const [form, setForm] = useState({
-  name:"",
-  description:"",
-  price:"",
-  stockQuantity:"",
-  imageUrl:"",
-  categoryId:1
-});
-    loadData();
-  };
+    const product = {
+      name: form.name,
+      description: form.description,
+      price: Number(form.price),
+      stockQuantity: Number(form.stockQuantity),
+      imageUrl: form.imageUrl,
+      category: {
+        id: Number(form.categoryId)
+      }
+    };
+
+    const res = await axios.post(
+      "https://ecommerce-backend-production-075f.up.railway.app/api/products",
+      product,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    console.log(res.data);
+    alert("Product Added Successfully");
+
+    loadProducts();
+
+    setForm({
+      name: "",
+      description: "",
+      price: "",
+      stockQuantity: "",
+      imageUrl: "",
+      categoryId: 1
+    });
+
+  } catch (err) {
+    console.log(err.response?.data);
+    console.log(err.response?.status);
+    alert("Product Add Failed");
+  }
+};
 
   const deleteProduct = async (id) => {
     await axios.delete(`https://ecommerce-backend-production-075f.up.railway.app/api/products/${id}`);
