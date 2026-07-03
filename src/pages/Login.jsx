@@ -24,16 +24,17 @@ export default function Login() {
     );
 
     const data = await response.json();
-    console.log(data);
+console.log(data);
 
-    if (response.ok) {
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("userRole", data.role);
+if (data.status === "SUCCESS") {
+  localStorage.setItem("token", data.token);
+  localStorage.setItem("isLoggedIn", "true");
+  localStorage.setItem("userRole", data.role);
 
-      navigate("/home");
-    } else {
-      alert("Login failed");
-    }
+  navigate("/home");
+} else {
+  alert("Invalid credentials");
+}
 
   } catch (error) {
     console.log(error);
