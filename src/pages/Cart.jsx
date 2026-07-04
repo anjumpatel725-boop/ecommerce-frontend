@@ -50,22 +50,40 @@ export default function Cart() {
 };
 
   const placeOrder = async () => {
+
   const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
 
-  const res = await fetch(`https://ecommerce-backend-production-075f.up.railway.app/api/orders/${userId}`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`
+  // Check address first
+  const userRes = await fetch(
+    `https://ecommerce-backend-production-075f.up.railway.app/api/users/${userId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     }
-  });
+  );
 
-  if (res.ok) {
-    alert("Order placed successfully");
-    await loadCart();
+  const user = await userRes.json();
 
-    // 🔥 ADD THIS
-    window.dispatchEvent(new Event("cartUpdated"));
+  if (!user.address || user.address.trim() === "") {
+    alert("Please add your delivery address first.");
+    navigate("/address");
+    return;
   }
+
+  // Place order
+  await fetch(
+    `https://ecommerce-backend-production-075f.up.railway.app/api/orders/${userId}`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+
+  alert("Order Placed Successfully");
 };
 
   const total = cart.reduce(
