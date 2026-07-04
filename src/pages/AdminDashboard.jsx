@@ -142,13 +142,30 @@ export default function AdminDashboard() {
   };
 
   const updateProduct = async () => {
+  try {
+    const token = localStorage.getItem("token");
+
     await axios.put(
       `https://ecommerce-backend-production-075f.up.railway.app/api/products/${editProduct.id}`,
-      editProduct
+      editProduct,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
     );
+
+    alert("Product Updated");
+
     setEditProduct(null);
-    loadData();
-  };
+
+    loadProducts();
+
+  } catch (err) {
+    console.log(err);
+    alert("Update Failed");
+  }
+};
 
  const updateStatus = async (id, status) => {
   try {
@@ -429,7 +446,13 @@ const COLORS = ["#3b82f6", "#f59e0b", "#10b981"];
 
             {products.map((p) => (
               <div className="list-card" key={p.id}>
-                <span>{p.name} - ₹{p.price}</span>
+                <span>
+  {p.name}
+  <br />
+  ₹{p.price}
+  <br />
+  Stock : {p.stockQuantity}
+</span>
                 <div>
                   <button onClick={() => setEditProduct(p)}>Edit</button>
                   <button onClick={() => deleteProduct(p.id)}>Delete</button>
@@ -487,6 +510,17 @@ const COLORS = ["#3b82f6", "#f59e0b", "#10b981"];
                 setEditProduct({ ...editProduct, price: e.target.value })
               }
             />
+            <input
+  type="number"
+  placeholder="Stock Quantity"
+  value={editProduct.stockQuantity}
+  onChange={(e) =>
+    setEditProduct({
+      ...editProduct,
+      stockQuantity: Number(e.target.value)
+    })
+  }
+/>
 
             <button onClick={updateProduct}>Update</button>
             <button onClick={() => setEditProduct(null)}>Close</button>
