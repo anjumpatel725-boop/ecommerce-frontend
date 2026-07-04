@@ -79,20 +79,14 @@ export default function Navbar() {
       </div>
 
       <div className="nav-links">
-  <Link to="/home">Home</Link>
-  <Link to="/cart">Cart ({cartCount})</Link>
-  <Link to="/orders">Orders</Link>
-
-  <span style={{ color: "yellow", fontWeight: "bold" }}>
-    ADDRESS TEST
-  </span>
-
-  <Link to="/address">Address</Link>
-
-  <button onClick={logout} className="logout-btn">
-    Logout
-  </button>
-</div>
+        <Link to="/home">Home</Link>
+        <Link to="/cart">Cart ({cartCount})</Link>
+        <Link to="/orders">Orders</Link>
+        <Link to="/address">Address</Link>
+        <button onClick={logout} className="logout-btn">
+          Logout
+        </button>
+      </div>
     </nav>
   );
 }
