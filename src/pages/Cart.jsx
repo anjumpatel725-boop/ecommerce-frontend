@@ -1,11 +1,13 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/Cart.css";
 
 export default function Cart() {
   const [cart, setCart] = useState([]);
   const userId = localStorage.getItem("userId");
+  const navigate = useNavigate();
 
   const loadCart = async () => {
     try {
@@ -51,41 +53,60 @@ export default function Cart() {
 
   const placeOrder = async () => {
 
-  const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("userId");
+  try {
 
-  // Check address first
-  const userRes = await fetch(
-    `https://ecommerce-backend-production-075f.up.railway.app/api/users/${userId}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+
+    // Check Address
+    const addressRes = await fetch(
+      `https://ecommerce-backend-production-075f.up.railway.app/api/address/${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       }
+    );
+
+    const addresses = await addressRes.json();
+
+    if (!addresses || addresses.length === 0) {
+      alert("Please add your delivery address first.");
+      navigate("/address");
+      return;
     }
-  );
 
-  const user = await userRes.json();
+    // Place Order
+    const orderRes = await fetch(
+      `https://ecommerce-backend-production-075f.up.railway.app/api/orders/${userId}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
 
-  if (!user.address || user.address.trim() === "") {
-    alert("Please add your delivery address first.");
-    navigate("/address");
-    return;
+    if (!orderRes.ok) {
+      const msg = await orderRes.text();
+      alert(msg);
+      return;
+    }
+
+    alert("Order Placed Successfully ✅");
+
+    loadCart();
+
+    window.dispatchEvent(new Event("cartUpdated"));
+
+    navigate("/orders");
+
+  } catch (err) {
+    console.log(err);
+    alert("Order Failed");
   }
 
-  // Place order
-  await fetch(
-    `https://ecommerce-backend-production-075f.up.railway.app/api/orders/${userId}`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-  );
-
-  alert("Order Placed Successfully");
 };
-
   const total = cart.reduce(
     (sum, item) => sum + item.product.price * item.quantity,
     0
