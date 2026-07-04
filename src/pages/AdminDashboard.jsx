@@ -446,13 +446,12 @@ const COLORS = ["#3b82f6", "#f59e0b", "#10b981"];
 
             {products.map((p) => (
               <div className="list-card" key={p.id}>
-                <span>
-  {p.name}
-  <br />
-  ₹{p.price}
-  <br />
-  Stock : {p.stockQuantity}
-</span>
+                <span> {p.name}
+                 <br />
+                ₹{p.price}
+                 <br />
+                 Stock : {p.stockQuantity}
+                 </span>
                 <div>
                   <button onClick={() => setEditProduct(p)}>Edit</button>
                   <button onClick={() => deleteProduct(p.id)}>Delete</button>
