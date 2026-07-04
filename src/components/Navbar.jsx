@@ -82,7 +82,7 @@ export default function Navbar() {
         <Link to="/home">Home</Link>
         <Link to="/cart">Cart ({cartCount})</Link>
         <Link to="/orders">Orders</Link>
-
+        <Link to="/address">Address</Link>
         <button onClick={logout} className="logout-btn">
           Logout
         </button>

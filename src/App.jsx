@@ -7,7 +7,7 @@ import Cart from "./pages/Cart";
 import Orders from "./pages/orders";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminLogin from "./pages/AdminLogin";
-
+import Address from "./pages/Address";
 // USER PROTECTION
 function PrivateRoute({ children }) {
   const loggedIn = localStorage.getItem("isLoggedIn") === "true";
@@ -74,7 +74,13 @@ export default function App() {
             </AdminRoute>
           }
         />
+        <Route
+        path="/address"
+        element={
+         <PrivateRoute>
+          <Address/>
+         </PrivateRoute>
+}/>
       </Routes>
-    
   );
 }
