@@ -54,69 +54,10 @@ export default function Cart() {
 
   const payNow = async () => {
 
-  const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("userId");
+  alert("Button Clicked");
 
-  // 1. Check Address
-  const addressRes = await axios.get(
-    `https://ecommerce-backend-production-075f.up.railway.app/api/address/${userId}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-  );
-
-  if (addressRes.data.length === 0) {
-    alert("Please add your delivery address first.");
-    window.location.href = "/address";
-    return;
-  }
-
-  // 2. Load Razorpay
-  await loadRazorpay();
-
-  // 3. Create Payment Order
-  const res = await axios.post(
-    "https://ecommerce-backend-production-075f.up.railway.app/api/payment/create",
-    {
-      amount: total
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-  );
-
-  const order = JSON.parse(res.data);
-
-  const options = {
-    key: "rzp_test_xxxxxxxxx", // Replace with your Razorpay Test Key
-
-    amount: order.amount,
-    currency: order.currency,
-    order_id: order.id,
-
-    name: "E-Commerce",
-
-    description: "Shopping Payment",
-
-    handler: async function () {
-
-      // 4. Payment Success → Place Order
-      await placeOrder();
-
-      alert("Payment Successful & Order Placed");
-
-      window.location.href = "/orders";
-    }
-  };
-
-  const payment = new window.Razorpay(options);
-
-  payment.open();
-};
+  // baaki code...
+}
   const total = cart.reduce(
     (sum, item) => sum + item.product.price * item.quantity,
     0
