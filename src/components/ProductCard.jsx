@@ -36,22 +36,28 @@ export default function ProductCard({ product }) {
     }
   };
 
-  return (
-    <div className="product-card">
-      <img
-        src={product.imageUrl}
-        alt={product.name}
-        className="product-image"
-      />
+ return (
+  <div className="product-card">
+    <img
+      src={product.imageUrl}
+      alt={product.name}
+      className="product-image"
+    />
 
-      <h3>{product.name}</h3>
-      <p>{product.description}</p>
-      <p>₹{product.price}</p>
-      <p>Stock: {product.stockQuantity}</p>
+    <h3>{product.name}</h3>
+    <p>{product.description}</p>
+    <p>₹{product.price}</p>
+    <p>Stock: {product.stockQuantity}</p>
 
+    {product.stockQuantity > 0 ? (
       <button className="cart-btn" onClick={addToCart}>
         Add to Cart
       </button>
-    </div>
-  );
+    ) : (
+      <button className="cart-btn" disabled>
+        Out of Stock
+      </button>
+    )}
+  </div>
+);
 }
