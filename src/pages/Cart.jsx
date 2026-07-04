@@ -149,14 +149,20 @@ const loadRazorpay = () => {
     razorpay.open();
 
   } catch (err) {
-    console.log(err);
 
-    if (err.response) {
-      console.log(err.response.data);
-    }
+  console.log("FULL ERROR:", err);
 
-    alert("Payment Failed");
+  if (err.response) {
+    console.log("Status:", err.response.status);
+    console.log("Data:", err.response.data);
   }
+
+  if (err.request) {
+    console.log("No Response:", err.request);
+  }
+
+  alert("Payment Failed");
+}
 };
 const placeOrder = async () => {
   await axios.post(
