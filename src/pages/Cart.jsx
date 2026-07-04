@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../styles/Cart.css";
 
 export default function Cart() {
@@ -51,61 +52,70 @@ export default function Cart() {
   window.dispatchEvent(new Event("cartUpdated"));
 };
 
-  const placeOrder = async () => {
+  const payNow = async () => {
 
-  try {
+  const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
 
-    const token = localStorage.getItem("token");
-    const userId = localStorage.getItem("userId");
-
-    // Check Address
-    const addressRes = await fetch(
-      `https://ecommerce-backend-production-075f.up.railway.app/api/address/${userId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+  // 1. Check Address
+  const addressRes = await axios.get(
+    `https://ecommerce-backend-production-075f.up.railway.app/api/address/${userId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
       }
-    );
-
-    const addresses = await addressRes.json();
-
-    if (!addresses || addresses.length === 0) {
-      alert("Please add your delivery address first.");
-      navigate("/address");
-      return;
     }
+  );
 
-    // Place Order
-    const orderRes = await fetch(
-      `https://ecommerce-backend-production-075f.up.railway.app/api/orders/${userId}`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
-
-    if (!orderRes.ok) {
-      const msg = await orderRes.text();
-      alert(msg);
-      return;
-    }
-
-    alert("Order Placed Successfully ✅");
-
-    loadCart();
-
-    window.dispatchEvent(new Event("cartUpdated"));
-
-    navigate("/orders");
-
-  } catch (err) {
-    console.log(err);
-    alert("Order Failed");
+  if (addressRes.data.length === 0) {
+    alert("Please add your delivery address first.");
+    window.location.href = "/address";
+    return;
   }
 
+  // 2. Load Razorpay
+  await loadRazorpay();
+
+  // 3. Create Payment Order
+  const res = await axios.post(
+    "https://ecommerce-backend-production-075f.up.railway.app/api/payment/create",
+    {
+      amount: total
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+
+  const order = JSON.parse(res.data);
+
+  const options = {
+    key: "rzp_test_xxxxxxxxx", // Replace with your Razorpay Test Key
+
+    amount: order.amount,
+    currency: order.currency,
+    order_id: order.id,
+
+    name: "E-Commerce",
+
+    description: "Shopping Payment",
+
+    handler: async function () {
+
+      // 4. Payment Success → Place Order
+      await placeOrder();
+
+      alert("Payment Successful & Order Placed");
+
+      window.location.href = "/orders";
+    }
+  };
+
+  const payment = new window.Razorpay(options);
+
+  payment.open();
 };
   const total = cart.reduce(
     (sum, item) => sum + item.product.price * item.quantity,
@@ -142,7 +152,9 @@ export default function Cart() {
 
             <div className="bill-card">
               <h2>Total: ₹{total}</h2>
-              <button onClick={placeOrder}>Place Order</button>
+              <button onClick={payNow}>
+    Pay & Place Order
+</button>
             </div>
           </>
         )}
