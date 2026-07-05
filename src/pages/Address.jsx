@@ -102,7 +102,7 @@ export default function Address() {
 
   } catch (err) {
     console.log(err);
-    alert("Failed");
+    alert("All fields are mandatory.");
   }
 };
   const deleteAddress = async(id)=>{
