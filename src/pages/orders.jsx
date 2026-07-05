@@ -51,7 +51,7 @@ export default function Orders() {
           <div className="empty-orders">No Orders Found</div>
         ) : (
           orders.map((order, index) => (
-            <div className="order-box" key={o.id}>
+            <div className="order-box" key={order.id}>
 
   <div className="order-top">
 
@@ -60,10 +60,9 @@ export default function Orders() {
       <p><b>Total:</b> ₹{order.totalAmount}</p>
     </div>
 
-    <div className="status">
-      {order.status}
-    </div>
-
+    <div className={`status ${order.status?.toLowerCase()}`}>
+  {order.status}
+</div>
   </div>
 
   <hr />
@@ -89,14 +88,15 @@ export default function Orders() {
 
   <hr />
 
-  {o.items.map(item => (
+  {order.items.map(item => (
 
     <div className="product-box" key={item.id}>
 
       <img
-        src={item.product.imageUrl}
-        alt=""
-      />
+  src={item.product.imageUrl}
+  alt={item.product.name}
+  className="order-img"
+/>
 
       <div>
 
