@@ -56,12 +56,12 @@ export default function Orders() {
   <div className="order-top">
 
     <div>
-      <h3>Order #{o.id}</h3>
-      <p><b>Total:</b> ₹{o.totalAmount}</p>
+      <h3>Order #{order.id}</h3>
+      <p><b>Total:</b> ₹{order.totalAmount}</p>
     </div>
 
     <div className="status">
-      {o.status}
+      {order.status}
     </div>
 
   </div>
@@ -72,17 +72,17 @@ export default function Orders() {
 
     <h4>📍 Delivery Address</h4>
 
-    <p><b>Name:</b> {o.fullName}</p>
+    <p><b>Name:</b> {order.fullName}</p>
 
-    <p><b>Mobile:</b> {o.mobile}</p>
+    <p><b>Mobile:</b> {order.mobile}</p>
 
     <p>
       <b>Address:</b><br />
-      {o.house}, {o.street}
+      {order.house}, {order.street}
       <br />
-      {o.city}, {o.state}
+      {order.city}, {order.state}
       <br />
-      {o.country} - {o.pincode}
+      {order.country} - {order.pincode}
     </p>
 
   </div>

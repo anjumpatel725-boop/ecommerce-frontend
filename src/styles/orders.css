@@ -61,12 +61,12 @@
   align-items: center;
 }
 
-.product-box img {
-  width: 140px;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 12px;
-  border: 1px solid #ddd;
+.order-img{
+    width:140px;
+    height:140px;
+    object-fit:cover;
+    border-radius:12px;
+    border:1px solid #ddd;
 }
 
 .product-box h4 {
