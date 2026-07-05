@@ -25,6 +25,11 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const [search, setSearch] = useState("");
+  const [statusFilter,setStatusFilter]=useState("ALL");
+  const [dateFilter, setDateFilter] = useState("");
+  const [selectedCustomer,setSelectedCustomer]=useState(null);
+
 
   const [form, setForm] = useState({
   name: "",
@@ -147,6 +152,7 @@ await axios.delete(
     }
   }
 );
+    loadProducts();  
     loadData();
   };
 
@@ -270,6 +276,25 @@ const downloadExcel = async () => {
 };
 
 const COLORS = ["#3b82f6", "#f59e0b", "#10b981"];
+const filteredOrders = orders.filter((o) => {
+
+  const searchMatch =
+  o.id.toString().includes(search) ||
+  (o.fullName || "").toLowerCase().includes(search.toLowerCase()) ||
+  (o.user?.email || "").toLowerCase().includes(search.toLowerCase());
+
+  const statusMatch =
+    statusFilter === "ALL" ||
+    o.status === statusFilter;
+
+  const dateMatch =
+    !dateFilter ||
+    (o.orderDate &&
+      o.orderDate.substring(0, 10) === dateFilter);
+
+  return searchMatch && statusMatch && dateMatch;
+
+});
   return (
     <div className="admin-layout">
       <div className="sidebar">
@@ -402,6 +427,7 @@ const COLORS = ["#3b82f6", "#f59e0b", "#10b981"];
     </div>
 
     {/* Recent Orders */}
+    
     <div className="recent-orders">
       <h2>Recent Orders</h2>
 
@@ -482,73 +508,172 @@ const COLORS = ["#3b82f6", "#f59e0b", "#10b981"];
         )}
 
         {activeTab === "orders" && (
-          <>
-            <h1>Orders</h1>
-            {orders.map((o) => (
-  <div className="admin-order-card" key={o.id}>
+<>
+<h1>Orders Management</h1>
 
-    <div className="admin-order-header">
-      <div>
-        <h3>Order #{o.id}</h3>
-        <p><b>Total:</b> ₹{o.totalAmount}</p>
-      </div>
+<div className="order-filters">
 
-      <select
-        value={o.status}
-        onChange={(e) => updateStatus(o.id, e.target.value)}
-      >
-        <option value="PLACED">Placed</option>
-        <option value="SHIPPED">Shipped</option>
-        <option value="DELIVERED">Delivered</option>
-      </select>
-    </div>
+<input
+type="text"
+placeholder="🔍 Search Order ID / Customer"
+value={search}
+onChange={(e)=>setSearch(e.target.value)}
+/>
 
-    <div className="admin-address">
-      <h4>📍 Delivery Address</h4>
+<select
+value={statusFilter}
+onChange={(e)=>setStatusFilter(e.target.value)}
+>
+<option value="ALL">All Status</option>
+<option value="PLACED">Placed</option>
+<option value="SHIPPED">Shipped</option>
+<option value="DELIVERED">Delivered</option>
+</select>
 
-      <p><b>Name:</b> {o.fullName}</p>
-      <p><b>Mobile:</b> {o.mobile}</p>
+<input
+type="date"
+value={dateFilter}
+onChange={(e)=>setDateFilter(e.target.value)}
+/>
 
-      <p>
-        {o.house}, {o.street}
-      </p>
+</div>
 
-      <p>
-        {o.city}, {o.state}
-      </p>
+{filteredOrders.length === 0 ? (
 
-      <p>
-        {o.country} - {o.pincode}
-      </p>
-    </div>
+  <div className="no-orders">
+    <h2>No Orders Found</h2>
+  </div>
 
-    {o.items?.map((item) => (
-      <div className="admin-product" key={item.id}>
+) : (
 
-        <img
-          src={item.product.imageUrl}
-          alt={item.product.name}
-        />
+  filteredOrders.map((o) => (
+
+    <div className="admin-order-card" key={o.id}>
+
+      <div className="admin-order-header">
 
         <div>
 
-          <h4>{item.product.name}</h4>
+          <h3>Order #{o.id}</h3>
 
-          <p>{item.product.description}</p>
+          <p><b>Total :</b> ₹{o.totalAmount}</p>
 
-          <p>Qty : {item.quantity}</p>
-
-          <p>Price : ₹{item.price}</p>
+          <p>
+            <b>Order Time :</b>{" "}
+            {o.orderDate
+              ? new Date(o.orderDate).toLocaleString()
+              : "N/A"}
+          </p>
 
         </div>
 
-      </div>
-    ))}
+        <select
+          className={`status-select ${o.status.toLowerCase()}`}
+          value={o.status}
+          onChange={(e) => updateStatus(o.id, e.target.value)}
+        >
+          <option value="PLACED">Placed</option>
+          <option value="SHIPPED">Shipped</option>
+          <option value="DELIVERED">Delivered</option>
+        </select>
 
-  </div>
-))}
-          </>
-        )}
+      </div>
+
+      <div className="admin-address">
+
+        <h4>📍 Delivery Address</h4>
+
+        <p><b>Name :</b> {o.fullName}</p>
+
+        <p><b>Mobile :</b> {o.mobile}</p>
+
+        <p>{o.house}, {o.street}</p>
+
+        <p>{o.city}, {o.state}</p>
+
+        <p>{o.country} - {o.pincode}</p>
+
+        <button onClick={() => setSelectedCustomer(o)}>
+          Customer Details
+        </button>
+
+      </div>
+
+      {o.items?.map((item) => (
+
+        <div className="admin-product" key={item.id}>
+
+          <img
+            src={item.product.imageUrl || "/no-image.png"}
+            alt={item.product.name}
+          />
+
+          <div>
+
+            <h4>{item.product.name}</h4>
+
+            <p>{item.product.description}</p>
+
+            <p>Qty : {item.quantity}</p>
+
+            <p>Price : ₹{item.price}</p>
+
+          </div>
+
+        </div>
+
+      ))}
+
+    </div>
+
+  ))
+
+)}
+
+{selectedCustomer && (
+
+<div className="customer-modal">
+
+<div className="customer-popup">
+
+<h2>Customer Details</h2>
+
+<p><b>Name :</b> {selectedCustomer.fullName}</p>
+
+<p><b>Mobile :</b> {selectedCustomer.mobile}</p>
+
+<p><b>Address :</b></p>
+
+<p>
+{selectedCustomer.house},
+{selectedCustomer.street}
+</p>
+
+<p>
+{selectedCustomer.city},
+{selectedCustomer.state}
+</p>
+
+<p>
+{selectedCustomer.country}
+-
+{selectedCustomer.pincode}
+</p>
+
+<button
+onClick={()=>setSelectedCustomer(null)}
+>
+Close
+</button>
+
+</div>
+
+</div>
+
+)}
+
+</>
+)}
 
         {editProduct && (
           <div className="modal">
