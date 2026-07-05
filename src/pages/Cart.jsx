@@ -155,13 +155,12 @@ const loadRazorpay = () => {
   if (err.response) {
     console.log("Status:", err.response.status);
     console.log("Data:", err.response.data);
+
+    alert(JSON.stringify(err.response.data));
+  } else {
+    alert(err.message);
   }
 
-  if (err.request) {
-    console.log("No Response:", err.request);
-  }
-
-  alert("Payment Failed");
 }
 };
 const placeOrder = async () => {
