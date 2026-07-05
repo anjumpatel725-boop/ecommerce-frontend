@@ -44,42 +44,67 @@ export default function Address() {
       loadAddresses();
   },[]);
 
-  const saveAddress = async ()=>{
+  const saveAddress = async () => {
 
-      try{
+  // Validation
+  if (
+    !form.fullName.trim() ||
+    !form.mobile.trim() ||
+    !form.house.trim() ||
+    !form.street.trim() ||
+    !form.city.trim() ||
+    !form.state.trim() ||
+    !form.country.trim() ||
+    !form.pincode.trim()
+  ) {
+    alert("All fields are mandatory.");
+    return;
+  }
 
-          await axios.post(
-              `https://ecommerce-backend-production-075f.up.railway.app/api/address/${userId}`,
-              form,
-              {
-                  headers:{
-                      Authorization:`Bearer ${token}`
-                  }
-              }
-          );
+  // Mobile Validation
+  if (!/^[0-9]{10}$/.test(form.mobile)) {
+    alert("Mobile number must be exactly 10 digits.");
+    return;
+  }
 
-          alert("Address Saved");
+  // Pincode Validation
+  if (!/^[0-9]{6}$/.test(form.pincode)) {
+    alert("Pincode must be exactly 6 digits.");
+    return;
+  }
 
-          setForm({
-              fullName:"",
-              mobile:"",
-              house:"",
-              street:"",
-              city:"",
-              state:"",
-              country:"",
-              pincode:""
-          });
+  try {
 
-          loadAddresses();
-
-      }catch(err){
-          console.log(err);
-          alert("Failed");
+    await axios.post(
+      `https://ecommerce-backend-production-075f.up.railway.app/api/address/${userId}`,
+      form,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       }
+    );
 
-  };
+    alert("Address Saved");
 
+    setForm({
+      fullName: "",
+      mobile: "",
+      house: "",
+      street: "",
+      city: "",
+      state: "",
+      country: "",
+      pincode: ""
+    });
+
+    loadAddresses();
+
+  } catch (err) {
+    console.log(err);
+    alert("Failed");
+  }
+};
   const deleteAddress = async(id)=>{
 
       await axios.delete(
@@ -105,48 +130,56 @@ export default function Address() {
 <h1>My Address</h1>
 
 <input
+required
 placeholder="Full Name"
 value={form.fullName}
 onChange={(e)=>setForm({...form,fullName:e.target.value})}
 />
 
 <input
+required
 placeholder="Mobile"
 value={form.mobile}
 onChange={(e)=>setForm({...form,mobile:e.target.value})}
 />
 
 <input
+required
 placeholder="House / Flat"
 value={form.house}
 onChange={(e)=>setForm({...form,house:e.target.value})}
 />
 
 <input
+required
 placeholder="Street"
 value={form.street}
 onChange={(e)=>setForm({...form,street:e.target.value})}
 />
 
 <input
+required
 placeholder="City"
 value={form.city}
 onChange={(e)=>setForm({...form,city:e.target.value})}
 />
 
 <input
+required
 placeholder="State"
 value={form.state}
 onChange={(e)=>setForm({...form,state:e.target.value})}
 />
 
 <input
+required
 placeholder="Country"
 value={form.country}
 onChange={(e)=>setForm({...form,country:e.target.value})}
 />
 
 <input
+required
 placeholder="Pincode"
 value={form.pincode}
 onChange={(e)=>setForm({...form,pincode:e.target.value})}
