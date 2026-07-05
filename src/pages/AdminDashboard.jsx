@@ -29,6 +29,7 @@ export default function AdminDashboard() {
   const [statusFilter,setStatusFilter]=useState("ALL");
   const [dateFilter, setDateFilter] = useState("");
   const [selectedCustomer,setSelectedCustomer]=useState(null);
+  const [productSearch, setProductSearch] = useState("");
 
 
   const [form, setForm] = useState({
@@ -295,6 +296,19 @@ const filteredOrders = orders.filter((o) => {
   return searchMatch && statusMatch && dateMatch;
 
 });
+const filteredProducts = products.filter((p) =>
+
+  p.name.toLowerCase().includes(productSearch.toLowerCase()) ||
+
+  (p.description || "")
+    .toLowerCase()
+    .includes(productSearch.toLowerCase()) ||
+
+  String(p.price).includes(productSearch) ||
+
+  String(p.stockQuantity).includes(productSearch)
+
+);
   return (
     <div className="admin-layout">
       <div className="sidebar">
@@ -457,9 +471,16 @@ const filteredOrders = orders.filter((o) => {
 
         {activeTab === "products" && (
           <>
-            <h1>Products</h1>
-            <p>Total Loaded: {products.length}</p>
+           <div className="product-search">
 
+  <input
+    type="text"
+    placeholder="🔍 Search Product..."
+    value={productSearch}
+    onChange={(e) => setProductSearch(e.target.value)}
+  />
+
+</div>
             <div className="form">
               <input placeholder="Name" value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })} />
@@ -479,7 +500,49 @@ const filteredOrders = orders.filter((o) => {
               <button onClick={addProduct}>Add Product</button>
             </div>
 
-            {products.map((p) => (
+            {filteredProducts.length === 0 ? (
+
+  <div className="no-products">
+    No Products Found
+  </div>
+
+) : (
+
+  filteredProducts.map((p) => (
+
+    <div className="list-card" key={p.id}>
+
+      <span>
+
+        <strong>{p.name}</strong>
+
+        <br />
+
+        ₹{p.price}
+
+        <br />
+
+        Stock : {p.stockQuantity}
+
+      </span>
+
+      <div>
+
+        <button onClick={() => setEditProduct(p)}>
+          Edit
+        </button>
+
+        <button onClick={() => deleteProduct(p.id)}>
+          Delete
+        </button>
+
+      </div>
+
+    </div>
+
+  ))
+
+)}
               <div className="list-card" key={p.id}>
                 <span> {p.name}
                  <br />
@@ -492,12 +555,9 @@ const filteredOrders = orders.filter((o) => {
                   <button onClick={() => deleteProduct(p.id)}>Delete</button>
                 </div>
               </div>
-            ))}
-
             
           </>
-        )}
-
+   )}
         {activeTab === "users" && (
           <>
             <h1>Users</h1>

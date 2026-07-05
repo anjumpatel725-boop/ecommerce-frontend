@@ -462,3 +462,38 @@ transform:translate(-50%,-50%);
 }
 
 }
+/* Product Search */
+
+.product-search{
+    margin:20px 0 25px;
+}
+
+.product-search input{
+    width:100%;
+    max-width:450px;
+    padding:14px 18px;
+    border:1px solid #d1d5db;
+    border-radius:12px;
+    font-size:16px;
+    outline:none;
+    transition:.3s;
+    background:#fff;
+}
+
+.product-search input:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 0 4px rgba(37,99,235,.15);
+}
+
+/* No Product */
+
+.no-products{
+    background:#fff;
+    padding:60px;
+    text-align:center;
+    font-size:24px;
+    font-weight:600;
+    color:#64748b;
+    border-radius:16px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
