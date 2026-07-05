@@ -107,7 +107,7 @@ const payNow = async (item) => {
     }
 
     await axios.post(
-      `https://ecommerce-backend-production-075f.up.railway.app/api/orders/${userId}`,
+      `https://ecommerce-backend-production-075f.up.railway.app/api/orders/${userId}/${item.id}`,
       {},
       {
         headers: {
@@ -116,7 +116,12 @@ const payNow = async (item) => {
       }
     );
 
-    alert("Order Placed");
+    alert("Order Placed Successfully");
+
+    setPaidItems(prev => ({
+      ...prev,
+      [item.id]: false
+    }));
 
     loadCart();
 
@@ -126,6 +131,7 @@ const payNow = async (item) => {
 
   } catch (err) {
     console.log(err);
+    alert("Order Failed");
   }
 
 };
