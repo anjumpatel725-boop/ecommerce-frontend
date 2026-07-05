@@ -118,7 +118,8 @@ const loadRazorpay = () => {
       typeof response.data === "string"
         ? JSON.parse(response.data)
         : response.data;
-
+     console.log("ORDER =", order);
+alert(JSON.stringify(order));
     const options = {
       key: "rzp_test_T9UBGuHk8tFPrK",
 
@@ -144,7 +145,15 @@ const loadRazorpay = () => {
         color: "#3399cc"
       }
     };
+     
+    console.log(window.Razorpay);
 
+    if (!window.Razorpay) {
+     alert("Razorpay not loaded");
+      return;
+    }
+
+    alert("Opening Razorpay...");
     const razorpay = new window.Razorpay(options);
 
     razorpay.open();
