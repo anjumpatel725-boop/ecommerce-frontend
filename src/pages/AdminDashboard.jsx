@@ -485,50 +485,67 @@ const COLORS = ["#3b82f6", "#f59e0b", "#10b981"];
           <>
             <h1>Orders</h1>
             {orders.map((o) => (
+  <div className="admin-order-card" key={o.id}>
 
-  <div className="list-card" key={o.id}>
+    <div className="admin-order-header">
+      <div>
+        <h3>Order #{o.id}</h3>
+        <p><b>Total:</b> ₹{o.totalAmount}</p>
+      </div>
 
-    <h3>Order #{o.id}</h3>
+      <select
+        value={o.status}
+        onChange={(e) => updateStatus(o.id, e.target.value)}
+      >
+        <option value="PLACED">Placed</option>
+        <option value="SHIPPED">Shipped</option>
+        <option value="DELIVERED">Delivered</option>
+      </select>
+    </div>
 
-    <p><b>Total :</b> ₹{o.totalAmount}</p>
+    <div className="admin-address">
+      <h4>📍 Delivery Address</h4>
 
-    <p><b>Status :</b> {o.status}</p>
+      <p><b>Name:</b> {o.fullName}</p>
+      <p><b>Mobile:</b> {o.mobile}</p>
 
-    <hr />
+      <p>
+        {o.house}, {o.street}
+      </p>
 
-    <h4>Delivery Address</h4>
+      <p>
+        {o.city}, {o.state}
+      </p>
 
-    <p>{o.fullName}</p>
+      <p>
+        {o.country} - {o.pincode}
+      </p>
+    </div>
 
-    <p>{o.mobile}</p>
+    {o.items?.map((item) => (
+      <div className="admin-product" key={item.id}>
 
-    <p>{o.house}</p>
+        <img
+          src={item.product.imageUrl}
+          alt={item.product.name}
+        />
 
-    <p>{o.street}</p>
+        <div>
 
-    <p>{o.city}</p>
+          <h4>{item.product.name}</h4>
 
-    <p>{o.state}</p>
+          <p>{item.product.description}</p>
 
-    <p>{o.country}</p>
+          <p>Qty : {item.quantity}</p>
 
-    <p>{o.pincode}</p>
+          <p>Price : ₹{item.price}</p>
 
-    <br />
+        </div>
 
-    <select
-      value={o.status}
-      onChange={(e) =>
-        updateStatus(o.id, e.target.value)
-      }
-    >
-      <option value="PLACED">Placed</option>
-      <option value="SHIPPED">Shipped</option>
-      <option value="DELIVERED">Delivered</option>
-    </select>
+      </div>
+    ))}
 
   </div>
-
 ))}
           </>
         )}

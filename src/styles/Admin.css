@@ -1,208 +1,420 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
-body {
-  background: #f1f5f9;
-  font-family: Arial, sans-serif;
+body{
+    background:#f1f5f9;
 }
 
-.admin-layout {
-  display: flex;
+/* =========================
+        LAYOUT
+========================= */
+
+.admin-layout{
+    display:flex;
+    min-height:100vh;
 }
 
-.sidebar {
-  width: 260px;
-  height: 100vh;
-  position: fixed;
-  background: linear-gradient(180deg,#0f172a,#1e293b);
-  color: white;
-  padding: 30px 20px;
+/* =========================
+        SIDEBAR
+========================= */
+
+.sidebar{
+    width:260px;
+    background:linear-gradient(180deg,#0f172a,#1e293b);
+    color:#fff;
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    padding:30px 20px;
+    overflow-y:auto;
 }
 
-.sidebar h2 {
-  margin-bottom: 30px;
+.sidebar h2{
+    text-align:center;
+    margin-bottom:35px;
+    font-size:28px;
 }
 
-.sidebar div {
-  padding: 14px;
-  margin-bottom: 10px;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: .3s;
+.sidebar div{
+    padding:14px 18px;
+    border-radius:12px;
+    margin-bottom:12px;
+    cursor:pointer;
+    transition:.3s;
+    font-size:16px;
 }
 
-.sidebar div:hover {
-  background: rgba(255,255,255,0.1);
+.sidebar div:hover{
+    background:rgba(255,255,255,.12);
 }
 
-.active {
-  background: #2563eb;
+.active{
+    background:#2563eb;
 }
 
-.main {
-  margin-left: 260px;
-  width: calc(100% - 260px);
-  padding: 35px;
+/* =========================
+        MAIN
+========================= */
+
+.main{
+    margin-left:260px;
+    width:calc(100% - 260px);
+    padding:35px;
 }
 
-.cards {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
+.main h1{
+    margin-bottom:25px;
+    color:#1e293b;
 }
 
-.card {
-  width: 220px;
-  padding: 25px;
-  color: white;
-  border-radius: 20px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-}
+/* =========================
+        DASHBOARD CARDS
+========================= */
 
-.card h2 {
-  margin-top: 15px;
-  font-size: 34px;
-}
-
-.card:nth-child(1) {
-  background: linear-gradient(135deg,#3b82f6,#1d4ed8);
-}
-
-.card:nth-child(2) {
-  background: linear-gradient(135deg,#10b981,#059669);
-}
-
-.card:nth-child(3) {
-  background: linear-gradient(135deg,#f59e0b,#d97706);
-}
-
-.revenue {
-  background: linear-gradient(135deg,#a855f7,#7e22ce);
-}
-
-.form {
-  background: white;
-  padding: 25px;
-  border-radius: 20px;
-  margin-bottom: 25px;
-}
-
-input, select {
-  width: 100%;
-  padding: 14px;
-  margin-bottom: 12px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-}
-
-button {
-  background: #2563eb;
-  color: white;
-  border: none;
-  padding: 12px 18px;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-right: 8px;
-}
-
-button:hover {
-  background: #1d4ed8;
-}
-
-.list-card {
-  background: white;
-  padding: 20px;
-  border-radius: 18px;
-  margin-bottom: 14px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
-}
-
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 420px;
-  transform: translate(-50%, -50%);
-  background: white;
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
-}
-.revenue {
-  background: linear-gradient(135deg,#a855f7,#7e22ce);
-}
-.analytics-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:25px;
-  margin-top:40px;
-}
-
-.chart-box{
-  margin-top:40px;
-  background:rgba(255,255,255,0.9);
-  backdrop-filter:blur(10px);
-  padding:30px;
-  border-radius:24px;
-  box-shadow:0 15px 35px rgba(0,0,0,0.08);
-  transition:.3s;
-}
-
-.chart-box:hover{
-  transform:translateY(-4px);
-}
-
-.chart-box h2{
-  margin-bottom:25px;
-  font-size:26px;
-  color:#0f172a;
+.cards{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
 }
 
 .card{
-  transition:.3s;
+    flex:1;
+    min-width:220px;
+    max-width:280px;
+    padding:25px;
+    color:#fff;
+    border-radius:18px;
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+    transition:.3s;
 }
 
 .card:hover{
-  transform:translateY(-8px) scale(1.02);
+    transform:translateY(-8px);
 }
 
+.card h2{
+    margin-top:18px;
+    font-size:34px;
+}
+
+.card:nth-child(1){
+    background:linear-gradient(135deg,#3b82f6,#1d4ed8);
+}
+
+.card:nth-child(2){
+    background:linear-gradient(135deg,#10b981,#059669);
+}
+
+.card:nth-child(3){
+    background:linear-gradient(135deg,#f59e0b,#d97706);
+}
+
+.revenue{
+    background:linear-gradient(135deg,#9333ea,#7e22ce);
+}
+
+/* =========================
+        CHARTS
+========================= */
+
+.analytics-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+    margin-top:40px;
+}
+
+.chart-box{
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.chart-box:hover{
+    transform:translateY(-5px);
+}
+
+.chart-box h2{
+    margin-bottom:20px;
+}
+
+/* =========================
+        RECENT ORDERS
+========================= */
+
 .recent-orders{
-  margin-top:40px;
-  background:white;
-  padding:30px;
-  border-radius:24px;
-  box-shadow:0 15px 35px rgba(0,0,0,0.08);
+    margin-top:40px;
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
 }
 
 .recent-orders table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:20px;
+    width:100%;
+    border-collapse:collapse;
 }
 
 .recent-orders th,
 .recent-orders td{
-  padding:16px;
-  text-align:left;
-  border-bottom:1px solid #e5e7eb;
+    padding:15px;
+    border-bottom:1px solid #ddd;
 }
 
 .recent-orders th{
-  background:#f8fafc;
+    background:#f8fafc;
 }
 
-.recent-orders tr:hover{
-  background:#f9fafb;
+/* =========================
+        FORM
+========================= */
+
+.form{
+    background:#fff;
+    padding:25px;
+    border-radius:18px;
+    margin-bottom:30px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
 }
+
+.form input,
+.form select{
+    width:100%;
+    padding:14px;
+    margin-bottom:15px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    outline:none;
+}
+
+.form input:focus,
+.form select:focus{
+    border-color:#2563eb;
+}
+
+/* =========================
+        BUTTON
+========================= */
+
+.main button{
+    background:#2563eb;
+    color:#fff;
+    border:none;
+    padding:12px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.3s;
+    margin-right:8px;
+}
+
+.main button:hover{
+    background:#1d4ed8;
+}
+
+/* =========================
+        PRODUCT CARD
+========================= */
+
+.list-card{
+    background:#fff;
+    border-radius:15px;
+    padding:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.list-card span{
+    line-height:1.8;
+}
+
+/* =========================
+        MODAL
+========================= */
+
+.modal{
+    position:fixed;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    width:420px;
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 20px 40px rgba(0,0,0,.25);
+    z-index:999;
+}
+
+.modal input{
+    width:100%;
+    padding:14px;
+    margin-bottom:15px;
+}
+
+/* =========================
+        ADMIN ORDERS
+========================= */
+
+.admin-order-card{
+    background:#fff;
+    padding:25px;
+    margin:25px 0;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.admin-order-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+    border-bottom:1px solid #ddd;
+    padding-bottom:20px;
+}
+
+.admin-order-header h3{
+    color:#1e3a8a;
+    margin-bottom:8px;
+}
+
+.admin-order-header select{
+    width:220px;
+    padding:12px;
+    border-radius:10px;
+}
+
+.admin-address{
+    background:#f8fafc;
+    padding:18px;
+    border-radius:12px;
+    margin-bottom:20px;
+    line-height:1.8;
+}
+
+.admin-address h4{
+    margin-bottom:10px;
+    color:#1e3a8a;
+}
+
+.admin-product{
+    display:flex;
+    gap:20px;
+    align-items:center;
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px solid #eee;
+}
+
+.admin-product img{
+    width:130px;
+    height:130px;
+    object-fit:cover;
+    border-radius:12px;
+    border:1px solid #ddd;
+}
+
+.admin-product h4{
+    margin-bottom:8px;
+}
+
+.admin-product p{
+    margin:5px 0;
+}
+
+/* =========================
+        STATUS
+========================= */
+
+.status{
+    padding:8px 18px;
+    border-radius:20px;
+    color:#fff;
+    font-weight:bold;
+}
+
+.status.placed{
+    background:#f59e0b;
+}
+
+.status.shipped{
+    background:#2563eb;
+}
+
+.status.delivered{
+    background:#10b981;
+}
+
+/* =========================
+        RESPONSIVE
+========================= */
 
 @media(max-width:1100px){
-  .analytics-grid{
+
+.analytics-grid{
     grid-template-columns:1fr;
-  }
+}
+
+}
+
+@media(max-width:768px){
+
+.admin-layout{
+    flex-direction:column;
+}
+
+.sidebar{
+    position:relative;
+    width:100%;
+    height:auto;
+}
+
+.main{
+    margin-left:0;
+    width:100%;
+    padding:20px;
+}
+
+.cards{
+    flex-direction:column;
+}
+
+.card{
+    max-width:100%;
+}
+
+.list-card{
+    flex-direction:column;
+    gap:15px;
+    align-items:flex-start;
+}
+
+.admin-order-header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:15px;
+}
+
+.admin-product{
+    flex-direction:column;
+    text-align:center;
+}
+
+.admin-product img{
+    width:180px;
+    height:180px;
+}
+
+.modal{
+    width:90%;
+}
+
 }
