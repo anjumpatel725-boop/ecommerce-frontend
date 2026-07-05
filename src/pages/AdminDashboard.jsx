@@ -297,17 +297,10 @@ const filteredOrders = orders.filter((o) => {
 
 });
 const filteredProducts = products.filter((p) =>
-
-  p.name.toLowerCase().includes(productSearch.toLowerCase()) ||
-
-  (p.description || "")
-    .toLowerCase()
-    .includes(productSearch.toLowerCase()) ||
-
+  (p.name || "").toLowerCase().includes(productSearch.toLowerCase()) ||
+  (p.description || "").toLowerCase().includes(productSearch.toLowerCase()) ||
   String(p.price).includes(productSearch) ||
-
   String(p.stockQuantity).includes(productSearch)
-
 );
   return (
     <div className="admin-layout">
