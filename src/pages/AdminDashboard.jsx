@@ -137,7 +137,16 @@ export default function AdminDashboard() {
 };
 
   const deleteProduct = async (id) => {
-    await axios.delete(`https://ecommerce-backend-production-075f.up.railway.app/api/products/${id}`);
+    const token = localStorage.getItem("token");
+
+await axios.delete(
+  `https://ecommerce-backend-production-075f.up.railway.app/api/products/${id}`,
+  {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+);
     loadData();
   };
 
@@ -476,19 +485,51 @@ const COLORS = ["#3b82f6", "#f59e0b", "#10b981"];
           <>
             <h1>Orders</h1>
             {orders.map((o) => (
-              <div className="list-card" key={o.id}>
-                <div>
-                  <h3>Order #{o.id}</h3>
-                  <p>₹{o.totalAmount}</p>
-                </div>
 
-                <select value={o.status} onChange={(e) => updateStatus(o.id, e.target.value)}>
-                  <option value="PLACED">Placed</option>
-                  <option value="SHIPPED">Shipped</option>
-                  <option value="DELIVERED">Delivered</option>
-                </select>
-              </div>
-            ))}
+  <div className="list-card" key={o.id}>
+
+    <h3>Order #{o.id}</h3>
+
+    <p><b>Total :</b> ₹{o.totalAmount}</p>
+
+    <p><b>Status :</b> {o.status}</p>
+
+    <hr />
+
+    <h4>Delivery Address</h4>
+
+    <p>{o.fullName}</p>
+
+    <p>{o.mobile}</p>
+
+    <p>{o.house}</p>
+
+    <p>{o.street}</p>
+
+    <p>{o.city}</p>
+
+    <p>{o.state}</p>
+
+    <p>{o.country}</p>
+
+    <p>{o.pincode}</p>
+
+    <br />
+
+    <select
+      value={o.status}
+      onChange={(e) =>
+        updateStatus(o.id, e.target.value)
+      }
+    >
+      <option value="PLACED">Placed</option>
+      <option value="SHIPPED">Shipped</option>
+      <option value="DELIVERED">Delivered</option>
+    </select>
+
+  </div>
+
+))}
           </>
         )}
 
