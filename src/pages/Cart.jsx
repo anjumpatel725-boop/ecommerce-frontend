@@ -53,25 +53,12 @@ const token = localStorage.getItem("token");
   // 🔥 ADD THIS (IMPORTANT)
   window.dispatchEvent(new Event("cartUpdated"));
 };
-const loadRazorpay = () => {
-  return new Promise((resolve) => {
-    if (window.Razorpay) {
-      resolve(true);
-      return;
-    }
 
-    const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
 
-    script.onload = () => resolve(true);
-    script.onerror = () => resolve(false);
-
-    document.body.appendChild(script);
-  });
-};
-
-  const payNow = async () => {
+const payNow = async () => {
   try {
+
+    // Check Cart
     if (cart.length === 0) {
       alert("Cart is Empty");
       return;
@@ -79,13 +66,13 @@ const loadRazorpay = () => {
 
     // Check Address
     const addressRes = await axios.get(
-      `https://ecommerce-backend-production-075f.up.railway.app/api/address/${userId}`,
-      {
-       headers: {
-  Authorization: `Bearer ${token}`
-}
-      }
-    );
+  `https://ecommerce-backend-production-075f.up.railway.app/api/address/${userId}`,
+  {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+);
 
     if (addressRes.data.length === 0) {
       alert("Please add your delivery address first.");
@@ -93,99 +80,40 @@ const loadRazorpay = () => {
       return;
     }
 
-    // Load Razorpay SDK
-    const loaded = await loadRazorpay();
-
-    if (!loaded) {
-      alert("Failed to load Razorpay SDK");
-      return;
-    }
-
-    // Create Razorpay Order
-    const response = await axios.post(
-      "https://ecommerce-backend-production-075f.up.railway.app/api/payment/create",
-      {
-        amount: total
-      },
-      {
-        headers: {
-  Authorization: `Bearer ${token}`
-}
-      }
+    // Demo Payment Popup
+    const paid = window.confirm(
+      `Demo Payment\n\nAmount: ₹${total}\n\nClick OK to complete payment.`
     );
 
-    const order =
-      typeof response.data === "string"
-        ? JSON.parse(response.data)
-        : response.data;
-     console.log("ORDER =", order);
-alert(JSON.stringify(order));
-    const options = {
-      key: "rzp_test_T9UBGuHk8tFPrK",
-
-      amount: order.amount,
-      currency: order.currency,
-      order_id: order.id,
-
-      name: "E-Commerce",
-
-      description: "Shopping Payment",
-
-      handler: async function () {
-        await placeOrder();
-
-        alert("Payment Successful");
-
-        loadCart();
-
-        navigate("/orders");
-      },
-
-      theme: {
-        color: "#3399cc"
-      }
-    };
-     
-    console.log(window.Razorpay);
-
-    if (!window.Razorpay) {
-     alert("Razorpay not loaded");
+    if (!paid) {
+      alert("Payment Cancelled");
       return;
     }
 
-    alert("Opening Razorpay...");
-    const razorpay = new window.Razorpay(options);
+    // Place Order
+    await axios.post(
+  `https://ecommerce-backend-production-075f.up.railway.app/api/orders/${userId}`,
+  {},
+  {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+);
 
-    razorpay.open();
+    window.dispatchEvent(new Event("cartUpdated"));
+
+    alert("✅ Payment Successful\n\n✅ Order Placed Successfully");
+
+    loadCart();
+
+    navigate("/orders");
 
   } catch (err) {
-
-  console.log("FULL ERROR:", err);
-
-  if (err.response) {
-    console.log("Status:", err.response.status);
-    console.log("Data:", err.response.data);
-
-    alert(JSON.stringify(err.response.data));
-  } else {
-    alert(err.message);
+    console.log(err);
+    alert("Payment Failed");
   }
-
-}
-};
-const placeOrder = async () => {
-  await axios.post(
-    `https://ecommerce-backend-production-075f.up.railway.app/api/orders/${userId}`,
-    {},
-    {
-      headers: {
-  Authorization: `Bearer ${token}`
-}
-    }
-  );
-
-  window.dispatchEvent(new Event("cartUpdated"));
-};
+}; 
   const total = cart.reduce(
     (sum, item) => sum + item.product.price * item.quantity,
     0
