@@ -51,33 +51,70 @@ export default function Orders() {
           <div className="empty-orders">No Orders Found</div>
         ) : (
           orders.map((order, index) => (
-            <div key={order.id} className="order-box">
-              <div className="order-header">
-                <h2>Order #{index + 1}</h2>
-                <span className={`status ${order.status?.toLowerCase()}`}>
-                  {order.status}
-                </span>
-              </div>
+            <div className="order-box" key={o.id}>
 
-              <p><b>Total:</b> ₹{order.totalAmount}</p>
+  <div className="order-top">
 
-              {order.items?.map((item) => (
-                <div key={item.id} className="order-item">
-                  <img
-                    src={item.product.imageUrl}
-                    alt={item.product.name}
-                    className="order-img"
-                  />
+    <div>
+      <h3>Order #{o.id}</h3>
+      <p><b>Total:</b> ₹{o.totalAmount}</p>
+    </div>
 
-                  <div className="order-details">
-                    <h3>{item.product.name}</h3>
-                    <p>{item.product.description}</p>
-                    <p>Qty: {item.quantity}</p>
-                    <p>Price: ₹{item.price}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+    <div className="status">
+      {o.status}
+    </div>
+
+  </div>
+
+  <hr />
+
+  <div className="address-box">
+
+    <h4>📍 Delivery Address</h4>
+
+    <p><b>Name:</b> {o.fullName}</p>
+
+    <p><b>Mobile:</b> {o.mobile}</p>
+
+    <p>
+      <b>Address:</b><br />
+      {o.house}, {o.street}
+      <br />
+      {o.city}, {o.state}
+      <br />
+      {o.country} - {o.pincode}
+    </p>
+
+  </div>
+
+  <hr />
+
+  {o.items.map(item => (
+
+    <div className="product-box" key={item.id}>
+
+      <img
+        src={item.product.imageUrl}
+        alt=""
+      />
+
+      <div>
+
+        <h4>{item.product.name}</h4>
+
+        <p>{item.product.description}</p>
+
+        <p>Qty : {item.quantity}</p>
+
+        <p>Price : ₹{item.price}</p>
+
+      </div>
+
+    </div>
+
+  ))}
+
+</div>
           ))
         )}
       </div>
