@@ -8,6 +8,7 @@ import "../styles/Cart.css";
 export default function Cart() {
   const [cart, setCart] = useState([]);
   const userId = localStorage.getItem("userId");
+const token = localStorage.getItem("token");
   const navigate = useNavigate();
  
 
@@ -43,8 +44,8 @@ export default function Cart() {
   await fetch(`https://ecommerce-backend-production-075f.up.railway.app/api/cart/${cartId}`, {
     method: "DELETE",
     headers: {
-      Authorization: `Bearer ${token}`
-    }
+  Authorization: `Bearer ${token}`
+}
   });
 
   await loadCart();
@@ -80,9 +81,9 @@ const loadRazorpay = () => {
     const addressRes = await axios.get(
       `https://ecommerce-backend-production-075f.up.railway.app/api/address/${userId}`,
       {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+       headers: {
+  Authorization: `Bearer ${token}`
+}
       }
     );
 
@@ -108,8 +109,8 @@ const loadRazorpay = () => {
       },
       {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+  Authorization: `Bearer ${token}`
+}
       }
     );
 
@@ -169,8 +170,8 @@ const placeOrder = async () => {
     {},
     {
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+  Authorization: `Bearer ${token}`
+}
     }
   );
 
