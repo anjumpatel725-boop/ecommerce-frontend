@@ -322,7 +322,7 @@ const filteredProducts = (products || []).filter((p) => {
     <div className="admin-layout">
       <div className="sidebar">
         <h2>
-  ⚡ <span>Admin Panel</span>
+  ⚡ Admin Panel
 </h2>
 
         <div className={activeTab === "dashboard" ? "active" : ""} onClick={() => setActiveTab("dashboard")}>
