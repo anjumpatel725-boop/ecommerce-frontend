@@ -466,12 +466,18 @@ const filteredProducts = products.filter((p) =>
           <>
            <div className="product-search">
 
+ <h1>Products</h1>
+
+<div className="product-search">
   <input
     type="text"
     placeholder="🔍 Search Product..."
     value={productSearch}
     onChange={(e) => setProductSearch(e.target.value)}
   />
+</div>
+
+<p>Total Products: {filteredProducts.length}</p>
 
 </div>
             <div className="form">
