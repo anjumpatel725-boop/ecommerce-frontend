@@ -274,9 +274,14 @@ const downloadExcel = async () => {
     window.URL.revokeObjectURL(downloadUrl);
 
   } catch (err) {
-    console.log(err);
-    alert("Excel download failed");
-  }
+  console.log("FULL ERROR:", err);
+  console.log("Response:", err.response);
+  console.log("Data:", err.response?.data);
+  console.log("Status:", err.response?.status);
+  console.log("Message:", err.message);
+
+  alert("Excel download failed");
+}
 };
 
 const COLORS = ["#3b82f6", "#f59e0b", "#10b981"];
