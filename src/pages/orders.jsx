@@ -7,7 +7,7 @@ export default function Orders() {
   const [orders, setOrders] = useState([]);
   const [expandedOrder, setExpandedOrder] = useState(null);
 
-const userId = localStorage.getItem("userId");
+  const userId = localStorage.getItem("userId");
 
   const loadOrders = async () => {
     try {
@@ -16,11 +16,14 @@ const userId = localStorage.getItem("userId");
       console.log("Token:", token);
       console.log("User ID:", userId);
 
-      const res = await fetch(`https://ecommerce-backend-production-075f.up.railway.app/api/orders/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
+      const res = await fetch(
+        `https://ecommerce-backend-production-075f.up.railway.app/api/orders/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      });
+      );
 
       console.log("Response Status:", res.status);
 
@@ -31,9 +34,23 @@ const userId = localStorage.getItem("userId");
       }
 
       const data = await res.json();
-      console.log("Orders Data:", data);
-      setOrders(data);
 
+      console.log("========== ORDERS ==========");
+      console.log(data);
+      console.log("Total Orders:", data.length);
+
+      data.forEach((order, index) => {
+        console.log(
+          "Index:",
+          index,
+          "Order ID:",
+          order.id,
+          "Customer:",
+          order.fullName
+        );
+      });
+
+      setOrders(data);
     } catch (err) {
       console.log("Orders Exception:", err);
     }
@@ -46,100 +63,128 @@ const userId = localStorage.getItem("userId");
   return (
     <>
       <Navbar />
+
       <div className="orders-page">
         <h1>📦 My Orders</h1>
 
         {orders.length === 0 ? (
-          <div className="empty-orders">No Orders Found</div>
+          <div className="empty-orders">
+            No Orders Found
+          </div>
         ) : (
-          orders.map((order, index) => (
-            <div className="order-box" key={order.id}>
+          orders.map((order, index) => {
+            console.log(
+              "Rendering ->",
+              "Index:",
+              index,
+              "Order ID:",
+              order.id
+            );
 
-  <div className="order-top">
+            return (
+              <div className="order-box" key={order.id}>
+                <div className="order-top">
+                  <div>
+                    <h3>Order #{index + 1}</h3>
 
-    <div>
-      <h3>Order #{index + 1}</h3>
-      <p><b>Total:</b> ₹{order.totalAmount}</p>
-    </div>
+                    <p>
+                      <b>Total:</b> ₹{order.totalAmount}
+                    </p>
+                  </div>
 
-    <div className={`status ${order.status?.toLowerCase()}`}>
-  {order.status}
-</div>
-  </div>
+                  <div
+                    className={`status ${order.status?.toLowerCase()}`}
+                  >
+                    {order.status}
+                  </div>
+                </div>
 
-  <button
-  className="details-btn"
-  onClick={() =>
-    setExpandedOrder(
-      expandedOrder === order.id ? null : order.id
-    )
-  }
->
-  {expandedOrder === order.id
-    ? "▲ Hide Details"
-    : "▼ View Details"}
-</button>
+                <button
+                  className="details-btn"
+                  onClick={() =>
+                    setExpandedOrder(
+                      expandedOrder === order.id
+                        ? null
+                        : order.id
+                    )
+                  }
+                >
+                  {expandedOrder === order.id
+                    ? "▲ Hide Details"
+                    : "▼ View Details"}
+                </button>
 
-{expandedOrder === order.id && (
-  <>
-    <hr />
+                {expandedOrder === order.id && (
+                  <>
+                    <hr />
 
-    <div className="address-box">
+                    <div className="address-box">
+                      <h4>📍 Delivery Address</h4>
 
-      <h4>📍 Delivery Address</h4>
+                      <p>
+                        <b>Name:</b> {order.fullName}
+                      </p>
 
-      <p><b>Name:</b> {order.fullName}</p>
+                      <p>
+                        <b>Mobile:</b> {order.mobile}
+                      </p>
 
-      <p><b>Mobile:</b> {order.mobile}</p>
+                      <p>
+                        <b>Address:</b>
+                        <br />
+                        {order.house}, {order.street}
+                        <br />
+                        {order.city}, {order.state}
+                        <br />
+                        {order.country} - {order.pincode}
+                      </p>
+                    </div>
 
-      <p>
-        <b>Address:</b><br />
-        {order.house}, {order.street}
-        <br />
-        {order.city}, {order.state}
-        <br />
-        {order.country} - {order.pincode}
-      </p>
+                    <hr />
 
-    </div>
+                    <h3 style={{ marginBottom: "15px" }}>
+                      🛒 Ordered Products
+                    </h3>
 
-    <hr />
+                    {order.items?.map((item) => (
+                      <div
+                        className="product-box"
+                        key={item.id}
+                      >
+                        <img
+                          src={
+                            item.product?.imageUrl ||
+                            "/no-image.png"
+                          }
+                          alt={item.product?.name}
+                          className="order-img"
+                        />
 
-    <h3 style={{ marginBottom: "15px" }}>
-      🛒 Ordered Products
-    </h3>
+                        <div>
+                          <h4>{item.product?.name}</h4>
 
-    {order.items.map(item => (
+                          <p>
+                            {item.product?.description}
+                          </p>
 
-      <div className="product-box" key={item.id}>
+                          <p>
+                            Qty : {item.quantity}
+                          </p>
 
-        <img
-          src={item.product.imageUrl}
-          alt={item.product.name}
-          className="order-img"
-        />
-
-        <div>
-
-          <h4>{item.product.name}</h4>
-
-          <p>{item.product.description}</p>
-
-          <p>Qty : {item.quantity}</p>
-
-          <p>Price : ₹{item.price}</p>
-
-        </div>
-
-      </div>
-
-    ))}
-  </>
-)}
-</div>
-          ))
+                          <p>
+                            Price : ₹{item.price}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                )}
+              </div>
+            );
+          })
         )}
       </div>
+
       <Footer />
     </>
   );
