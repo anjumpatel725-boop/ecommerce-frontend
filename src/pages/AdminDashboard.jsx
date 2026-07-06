@@ -30,6 +30,7 @@ export default function AdminDashboard() {
   const [dateFilter, setDateFilter] = useState("");
   const [selectedCustomer,setSelectedCustomer]=useState(null);
   const [productSearch, setProductSearch] = useState("");
+  
 
 
   const [form, setForm] = useState({
@@ -278,7 +279,6 @@ const downloadExcel = async () => {
 
 const COLORS = ["#3b82f6", "#f59e0b", "#10b981"];
 const filteredOrders = orders.filter((o) => {
-
   const searchMatch =
   o.id.toString().includes(search) ||
   (o.fullName || "").toLowerCase().includes(search.toLowerCase()) ||
@@ -296,12 +296,21 @@ const filteredOrders = orders.filter((o) => {
   return searchMatch && statusMatch && dateMatch;
 
 });
-const filteredProducts = products.filter((p) =>
-  (p.name || "").toLowerCase().includes(productSearch.toLowerCase()) ||
-  (p.description || "").toLowerCase().includes(productSearch.toLowerCase()) ||
-  String(p.price).includes(productSearch) ||
-  String(p.stockQuantity).includes(productSearch)
-);
+const filteredProducts = (products || []).filter((p) => {
+  return (
+    (p.name || "")
+      .toLowerCase()
+      .includes(productSearch.toLowerCase()) ||
+
+    (p.description || "")
+      .toLowerCase()
+      .includes(productSearch.toLowerCase()) ||
+
+    String(p.price || "").includes(productSearch) ||
+
+    String(p.stockQuantity || "").includes(productSearch)
+  );
+});
   return (
     <div className="admin-layout">
       <div className="sidebar">
@@ -463,79 +472,105 @@ const filteredProducts = products.filter((p) =>
 
 
         {activeTab === "products" && (
-          <>
-           <div className="product-search">
+  <>
+    <h1>Products Management</h1>
 
- <h1>Products</h1>
-
-<div className="product-search">
-  <input
-    type="text"
-    placeholder="🔍 Search Product..."
-    value={productSearch}
-    onChange={(e) => setProductSearch(e.target.value)}
-  />
-</div>
-
-<p>Total Products: {filteredProducts.length}</p>
-
-</div>
-            <div className="form">
-              <input placeholder="Name" value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })} />
-
-              <input placeholder="Description" value={form.description}
-                onChange={(e) => setForm({ ...form, description: e.target.value })} />
-
-              <input placeholder="Price" value={form.price}
-                onChange={(e) => setForm({ ...form, price: e.target.value })} />
-
-              <input placeholder="Stock" value={form.stockQuantity}
-                onChange={(e) => setForm({ ...form, stockQuantity: e.target.value })} />
-
-              <input placeholder="Image URL" value={form.imageUrl}
-                onChange={(e) => setForm({ ...form, imageUrl: e.target.value })} />
-
-              <button onClick={addProduct}>Add Product</button>
-            </div>
-
-            {filteredProducts.length === 0 ? (
-  <div className="no-products">
-    No Products Found
-  </div>
-) : (
-  filteredProducts.map((p) => (
-    <div className="list-card" key={p.id}>
-      <span>
-        <strong>{p.name}</strong>
-        <br />
-        ₹{p.price}
-        <br />
-        Stock : {p.stockQuantity}
-      </span>
-
-      <div>
-        <button onClick={() => setEditProduct(p)}>Edit</button>
-        <button onClick={() => deleteProduct(p.id)}>Delete</button>
-      </div>
+    <div className="product-search">
+      <input
+        type="text"
+        placeholder="🔍 Search Product..."
+        value={productSearch}
+        onChange={(e) => setProductSearch(e.target.value)}
+      />
     </div>
-  ))
+
+    <p>Total Products: {filteredProducts.length}</p>
+
+    <div className="form">
+      <input
+        placeholder="Name"
+        value={form.name}
+        onChange={(e) =>
+          setForm({ ...form, name: e.target.value })
+        }
+      />
+
+      <input
+        placeholder="Description"
+        value={form.description}
+        onChange={(e) =>
+          setForm({ ...form, description: e.target.value })
+        }
+      />
+
+      <input
+        placeholder="Price"
+        value={form.price}
+        onChange={(e) =>
+          setForm({ ...form, price: e.target.value })
+        }
+      />
+
+      <input
+        placeholder="Stock"
+        value={form.stockQuantity}
+        onChange={(e) =>
+          setForm({
+            ...form,
+            stockQuantity: e.target.value,
+          })
+        }
+      />
+
+      <input
+        placeholder="Image URL"
+        value={form.imageUrl}
+        onChange={(e) =>
+          setForm({
+            ...form,
+            imageUrl: e.target.value,
+          })
+        }
+      />
+
+      <button onClick={addProduct}>
+        Add Product
+      </button>
+    </div>
+
+    {filteredProducts.length === 0 ? (
+      <div className="no-products">
+        <h2>No Products Found</h2>
+      </div>
+    ) : (
+      (filteredProducts || []).map((p)=>(
+        <div className="list-card" key={p.id}>
+          <span>
+            <strong>{p.name}</strong>
+            <br />
+            ₹{p.price}
+            <br />
+            Stock : {p.stockQuantity}
+          </span>
+
+          <div>
+            <button
+              onClick={() => setEditProduct(p)}
+            >
+              Edit
+            </button>
+
+            <button
+              onClick={() => deleteProduct(p.id)}
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      ))
+    )}
+  </>
 )}
-              <div className="list-card" key={p.id}>
-                <span> {p.name}
-                 <br />
-                ₹{p.price}
-                 <br />
-                 Stock : {p.stockQuantity}
-                 </span>
-                <div>
-                  <button onClick={() => setEditProduct(p)}>Edit</button>
-                  <button onClick={() => deleteProduct(p.id)}>Delete</button>
-                </div>
-              </div>
-            
-          </>
-   )}
         {activeTab === "users" && (
           <>
             <h1>Users</h1>
