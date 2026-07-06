@@ -58,7 +58,7 @@ const userId = localStorage.getItem("userId");
   <div className="order-top">
 
     <div>
-      <h3>Order #{order.id}</h3>
+      <h3>Order #{index + 1}</h3>
       <p><b>Total:</b> ₹{order.totalAmount}</p>
     </div>
 
