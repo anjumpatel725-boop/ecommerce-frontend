@@ -248,24 +248,31 @@ const downloadExcel = async () => {
   try {
     const token = localStorage.getItem("token");
 
-    const res = await axios.get(
-      "https://ecommerce-backend-production-075f.up.railway.app/api/admin/orders/export/excel",
-      {
-        responseType: "blob",
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
+    const response = await axios({
+      url: "https://ecommerce-backend-production-075f.up.railway.app/api/admin/orders/export/excel",
+      method: "GET",
+      responseType: "blob",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-    const url = window.URL.createObjectURL(new Blob([res.data]));
-    const link = document.createElement("a");
+    const blob = new Blob([response.data], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
 
-    link.href = url;
-    link.setAttribute("download", "orders.xlsx");
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+    const downloadUrl = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = downloadUrl;
+    a.download = "orders.xlsx";
+
+    document.body.appendChild(a);
+    a.click();
+
+    a.remove();
+    window.URL.revokeObjectURL(downloadUrl);
+
   } catch (err) {
     console.log(err);
     alert("Excel download failed");
