@@ -245,43 +245,45 @@ const orderStatusData = [
   }
 ];
 const downloadExcel = async () => {
+
   try {
+
     const token = localStorage.getItem("token");
 
-    const response = await axios({
-      url: "https://ecommerce-backend-production-075f.up.railway.app/api/admin/orders/export/excel",
-      method: "GET",
-      responseType: "blob",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.get(
+      "https://ecommerce-backend-production-075f.up.railway.app/api/admin/orders/export/excel",
+      {
+        responseType: "blob",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
 
-    const blob = new Blob([response.data], {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    });
-
-    const downloadUrl = window.URL.createObjectURL(blob);
+    const url = window.URL.createObjectURL(response.data);
 
     const a = document.createElement("a");
-    a.href = downloadUrl;
+
+    a.href = url;
+
     a.download = "orders.xlsx";
 
     document.body.appendChild(a);
+
     a.click();
 
     a.remove();
-    window.URL.revokeObjectURL(downloadUrl);
+
+    window.URL.revokeObjectURL(url);
 
   } catch (err) {
-  console.log("FULL ERROR:", err);
-  console.log("Response:", err.response);
-  console.log("Data:", err.response?.data);
-  console.log("Status:", err.response?.status);
-  console.log("Message:", err.message);
 
-  alert("Excel download failed");
-}
+    console.log(err);
+
+    alert("Download Failed");
+
+  }
+
 };
 
 const COLORS = ["#3b82f6", "#f59e0b", "#10b981"];
