@@ -16,7 +16,6 @@ import {
   Legend
 } from "recharts";
 import "../styles/Admin.css";
-
 export default function AdminDashboard() {
   const [products, setProducts] = useState([]);
   const [totalProducts, setTotalProducts] = useState(0);
@@ -30,9 +29,7 @@ export default function AdminDashboard() {
   const [dateFilter, setDateFilter] = useState("");
   const [selectedCustomer,setSelectedCustomer]=useState(null);
   const [productSearch, setProductSearch] = useState("");
-  
-
-
+  const [expandedOrder, setExpandedOrder] = useState(null);
   const [form, setForm] = useState({
   name: "",
   description: "",
@@ -41,8 +38,6 @@ export default function AdminDashboard() {
   imageUrl: "",
   categoryId: 1
 });
-  
-
   const [editProduct, setEditProduct] = useState(null);
 
   useEffect(() => {
@@ -639,7 +634,18 @@ onChange={(e)=>setDateFilter(e.target.value)}
           </p>
 
         </div>
-
+         <button
+  className="details-btn"
+  onClick={() =>
+    setExpandedOrder(
+      expandedOrder === o.id ? null : o.id
+    )
+  }
+>
+  {expandedOrder === o.id
+    ? "▲ Hide Details"
+    : "▼ View Details"}
+</button>
         <select
           className={`status-select ${o.status.toLowerCase()}`}
           value={o.status}
@@ -652,50 +658,53 @@ onChange={(e)=>setDateFilter(e.target.value)}
 
       </div>
 
-      <div className="admin-address">
+      {expandedOrder === o.id && (
+  <>
+    <div className="admin-address">
 
-        <h4>📍 Delivery Address</h4>
+      <h4>📍 Delivery Address</h4>
 
-        <p><b>Name :</b> {o.fullName}</p>
+      <p><b>Name :</b> {o.fullName}</p>
 
-        <p><b>Mobile :</b> {o.mobile}</p>
+      <p><b>Mobile :</b> {o.mobile}</p>
 
-        <p>{o.house}, {o.street}</p>
+      <p>{o.house}, {o.street}</p>
 
-        <p>{o.city}, {o.state}</p>
+      <p>{o.city}, {o.state}</p>
 
-        <p>{o.country} - {o.pincode}</p>
+      <p>{o.country} - {o.pincode}</p>
 
-        <button onClick={() => setSelectedCustomer(o)}>
-          Customer Details
-        </button>
+    </div>
 
-      </div>
+    <h3>🛒 Ordered Products</h3>
 
-      {o.items?.map((item) => (
+    {o.items?.map((item) => (
 
-        <div className="admin-product" key={item.id}>
+      <div className="admin-product" key={item.id}>
 
-          <img
-            src={item.product.imageUrl || "/no-image.png"}
-            alt={item.product.name}
-          />
+        <img
+          src={item.product.imageUrl || "/no-image.png"}
+          alt={item.product.name}
+        />
 
-          <div>
+        <div>
 
-            <h4>{item.product.name}</h4>
+          <h4>{item.product.name}</h4>
 
-            <p>{item.product.description}</p>
+          <p>{item.product.description}</p>
 
-            <p>Qty : {item.quantity}</p>
+          <p>Qty : {item.quantity}</p>
 
-            <p>Price : ₹{item.price}</p>
-
-          </div>
+          <p>Price : ₹{item.price}</p>
 
         </div>
 
-      ))}
+      </div>
+
+    ))}
+
+  </>
+)}
 
     </div>
 

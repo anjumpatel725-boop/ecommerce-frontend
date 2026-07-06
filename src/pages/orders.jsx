@@ -5,7 +5,9 @@ import "../styles/orders.css";
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
-  const userId = localStorage.getItem("userId");
+  const [expandedOrder, setExpandedOrder] = useState(null);
+
+const userId = localStorage.getItem("userId");
 
   const loadOrders = async () => {
     try {
@@ -65,55 +67,75 @@ export default function Orders() {
 </div>
   </div>
 
-  <hr />
+  <button
+  className="details-btn"
+  onClick={() =>
+    setExpandedOrder(
+      expandedOrder === order.id ? null : order.id
+    )
+  }
+>
+  {expandedOrder === order.id
+    ? "▲ Hide Details"
+    : "▼ View Details"}
+</button>
 
-  <div className="address-box">
+{expandedOrder === order.id && (
+  <>
+    <hr />
 
-    <h4>📍 Delivery Address</h4>
+    <div className="address-box">
 
-    <p><b>Name:</b> {order.fullName}</p>
+      <h4>📍 Delivery Address</h4>
 
-    <p><b>Mobile:</b> {order.mobile}</p>
+      <p><b>Name:</b> {order.fullName}</p>
 
-    <p>
-      <b>Address:</b><br />
-      {order.house}, {order.street}
-      <br />
-      {order.city}, {order.state}
-      <br />
-      {order.country} - {order.pincode}
-    </p>
+      <p><b>Mobile:</b> {order.mobile}</p>
 
-  </div>
-
-  <hr />
-
-  {order.items.map(item => (
-
-    <div className="product-box" key={item.id}>
-
-      <img
-  src={item.product.imageUrl}
-  alt={item.product.name}
-  className="order-img"
-/>
-
-      <div>
-
-        <h4>{item.product.name}</h4>
-
-        <p>{item.product.description}</p>
-
-        <p>Qty : {item.quantity}</p>
-
-        <p>Price : ₹{item.price}</p>
-
-      </div>
+      <p>
+        <b>Address:</b><br />
+        {order.house}, {order.street}
+        <br />
+        {order.city}, {order.state}
+        <br />
+        {order.country} - {order.pincode}
+      </p>
 
     </div>
 
-  ))}
+    <hr />
 
+    <h3 style={{ marginBottom: "15px" }}>
+      🛒 Ordered Products
+    </h3>
+
+    {order.items.map(item => (
+
+      <div className="product-box" key={item.id}>
+
+        <img
+          src={item.product.imageUrl}
+          alt={item.product.name}
+          className="order-img"
+        />
+
+        <div>
+
+          <h4>{item.product.name}</h4>
+
+          <p>{item.product.description}</p>
+
+          <p>Qty : {item.quantity}</p>
+
+          <p>Price : ₹{item.price}</p>
+
+        </div>
+
+      </div>
+
+    ))}
+  </>
+)}
 </div>
           ))
         )}

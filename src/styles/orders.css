@@ -86,3 +86,17 @@ hr {
   font-size: 22px;
   margin-top: 80px;
 }
+.details-btn{
+    background:#2563eb;
+    color:#fff;
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-top:15px;
+    transition:.3s;
+}
+
+.details-btn:hover{
+    background:#1d4ed8;
+}
