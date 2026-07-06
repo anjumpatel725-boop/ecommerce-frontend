@@ -494,47 +494,26 @@ const filteredProducts = products.filter((p) =>
             </div>
 
             {filteredProducts.length === 0 ? (
-
   <div className="no-products">
     No Products Found
   </div>
-
 ) : (
-
   filteredProducts.map((p) => (
-
     <div className="list-card" key={p.id}>
-
       <span>
-
         <strong>{p.name}</strong>
-
         <br />
-
         ₹{p.price}
-
         <br />
-
         Stock : {p.stockQuantity}
-
       </span>
 
       <div>
-
-        <button onClick={() => setEditProduct(p)}>
-          Edit
-        </button>
-
-        <button onClick={() => deleteProduct(p.id)}>
-          Delete
-        </button>
-
+        <button onClick={() => setEditProduct(p)}>Edit</button>
+        <button onClick={() => deleteProduct(p.id)}>Delete</button>
       </div>
-
     </div>
-
   ))
-
 )}
               <div className="list-card" key={p.id}>
                 <span> {p.name}
