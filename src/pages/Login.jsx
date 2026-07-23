@@ -34,7 +34,6 @@ if (data.status === "SUCCESS") {
   // IMPORTANT
   localStorage.setItem("userId", data.userId);
   localStorage.setItem("userName", data.name);
-
   navigate("/home");
 } else {
   alert("Please register first");
