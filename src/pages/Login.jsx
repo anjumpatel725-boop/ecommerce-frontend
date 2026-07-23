@@ -37,7 +37,7 @@ if (data.status === "SUCCESS") {
 
   navigate("/home");
 } else {
-  alert("Invalid credentials");
+  alert("Please register first");
 }
 
   } catch (error) {
