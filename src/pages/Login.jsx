@@ -14,30 +14,48 @@ export default function Login() {
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           email: email.trim(),
-          password: password.trim()
-        })
+          password: password.trim(),
+        }),
       }
     );
 
     const data = await response.json();
-console.log(data);
 
-if (data.status === "SUCCESS") {
-  localStorage.setItem("token", data.token);
-  localStorage.setItem("isLoggedIn", "true");
-  localStorage.setItem("userRole", data.role);
+    console.log(data);
 
-  // IMPORTANT
-  localStorage.setItem("userId", data.userId);
-  localStorage.setItem("userName", data.name);
-  navigate("/home");
-} else {
-  alert("Please register first");
-}
+    if (data.status === "SUCCESS") {
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("userRole", data.role);
+      localStorage.setItem("userId", data.userId);
+      localStorage.setItem("userName", data.name);
+
+      navigate("/home");
+    }
+
+    else if (data.status === "USER_NOT_FOUND") {
+
+      alert("You are not registered. Please register first.");
+
+      navigate("/register");
+
+    }
+
+    else if (data.status === "INVALID_PASSWORD") {
+
+      alert("Incorrect Password");
+
+    }
+
+    else {
+
+      alert(data.message || "Login Failed");
+
+    }
 
   } catch (error) {
     console.log(error);
