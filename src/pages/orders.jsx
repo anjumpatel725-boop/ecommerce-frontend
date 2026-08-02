@@ -17,7 +17,7 @@ export default function Orders() {
       console.log("User ID:", userId);
 
       const res = await fetch(
-        `https://ecommerce-backend-production-075f.up.railway.app/api/orders/${userId}`,
+        `https://ecommerce-backend-qh4p.onrender.com/api/orders/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

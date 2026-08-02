@@ -10,7 +10,7 @@ export default function Login() {
   const handleLogin = async () => {
   try {
     const response = await fetch(
-      "https://ecommerce-backend-production-075f.up.railway.app/api/auth/login",
+      "https://ecommerce-backend-qh4p.onrender.com/api/auth/login",
       {
         method: "POST",
         headers: {

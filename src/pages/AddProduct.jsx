@@ -18,7 +18,7 @@ export default function AddProduct() {
 
   const addProduct = async () => {
     try {
-      const res = await fetch("https://ecommerce-backend-production-075f.up.railway.app/api/products", {
+      const res = await fetch("https://ecommerce-backend-qh4p.onrender.com/api/products", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

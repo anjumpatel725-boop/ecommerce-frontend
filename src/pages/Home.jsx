@@ -15,10 +15,10 @@ export default function Home() {
     const params = new URLSearchParams(location.search);
     const search = params.get("search");
 
-    let url = "https://ecommerce-backend-production-075f.up.railway.app/api/products";
+    let url = "https://ecommerce-backend-qh4p.onrender.com/api/products";
 
     if (search && search.trim() !== "") {
-      url = `https://ecommerce-backend-production-075f.up.railway.app/api/products/filter?keyword=${search}`;
+      url = `https://ecommerce-backend-qh4p.onrender.com/api/products/filter?keyword=${search}`;
     }
 
     fetch(url)

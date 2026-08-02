@@ -50,7 +50,7 @@ export default function AdminDashboard() {
 
  const loadProducts = async () => {
   try {
-    const res = await axios.get("https://ecommerce-backend-production-075f.up.railway.app/api/products");
+    const res = await axios.get("https://ecommerce-backend-qh4p.onrender.com/api/products");
 
     setProducts(res.data);
     setTotalProducts(res.data.length);
@@ -72,14 +72,14 @@ export default function AdminDashboard() {
     };
 
     const userRes = await axios.get(
-      "https://ecommerce-backend-production-075f.up.railway.app/api/admin/users",
+      "https://ecommerce-backend-qh4p.onrender.com/api/admin/users",
       config
     );
 
     console.log("Users:", userRes.data);
 
     const orderRes = await axios.get(
-      "https://ecommerce-backend-production-075f.up.railway.app/api/admin/orders",
+      "https://ecommerce-backend-qh4p.onrender.com/api/admin/orders",
       config
     );
 
@@ -108,7 +108,7 @@ export default function AdminDashboard() {
     };
 
     const res = await axios.post(
-      "https://ecommerce-backend-production-075f.up.railway.app/api/products",
+      "https://ecommerce-backend-qh4p.onrender.com/api/products",
       product,
       {
         headers: {
@@ -142,7 +142,7 @@ export default function AdminDashboard() {
     const token = localStorage.getItem("token");
 
 await axios.delete(
-  `https://ecommerce-backend-production-075f.up.railway.app/api/products/${id}`,
+  `https://ecommerce-backend-qh4p.onrender.com/api/products/${id}`,
   {
     headers: {
       Authorization: `Bearer ${token}`
@@ -158,7 +158,7 @@ await axios.delete(
     const token = localStorage.getItem("token");
 
     await axios.put(
-      `https://ecommerce-backend-production-075f.up.railway.app/api/products/${editProduct.id}`,
+      `https://ecommerce-backend-qh4p.onrender.com/api/products/${editProduct.id}`,
       editProduct,
       {
         headers: {
@@ -184,7 +184,7 @@ await axios.delete(
     const token = localStorage.getItem("token");
 
     await axios.put(
-      `https://ecommerce-backend-production-075f.up.railway.app/api/admin/orders/${id}/status?status=${status}`,
+      `https://ecommerce-backend-qh4p.onrender.com/api/admin/orders/${id}/status?status=${status}`,
       {},
       {
         headers: {
@@ -251,7 +251,7 @@ const downloadExcel = async () => {
     const token = localStorage.getItem("token");
 
     const response = await axios.get(
-      "https://ecommerce-backend-production-075f.up.railway.app/api/admin/orders/export/excel",
+      "https://ecommerce-backend-qh4p.onrender.com/api/admin/orders/export/excel",
       {
         responseType: "blob",
         headers: {

@@ -25,7 +25,7 @@ export default function Address() {
     try {
 
       const res = await axios.get(
-        `https://ecommerce-backend-production-075f.up.railway.app/api/address/${userId}`,
+        `https://ecommerce-backend-qh4p.onrender.com/api/address/${userId}`,
         {
           headers:{
             Authorization:`Bearer ${token}`
@@ -76,7 +76,7 @@ export default function Address() {
   try {
 
     await axios.post(
-      `https://ecommerce-backend-production-075f.up.railway.app/api/address/${userId}`,
+      `https://ecommerce-backend-qh4p.onrender.com/api/address/${userId}`,
       form,
       {
         headers: {
@@ -108,7 +108,7 @@ export default function Address() {
   const deleteAddress = async(id)=>{
 
       await axios.delete(
-          `https://ecommerce-backend-production-075f.up.railway.app/api/address/${id}`,
+          `https://ecommerce-backend-qh4p.onrender.com/api/address/${id}`,
           {
               headers:{
                   Authorization:`Bearer ${token}`

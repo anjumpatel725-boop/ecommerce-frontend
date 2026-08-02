@@ -40,11 +40,11 @@ https://anjumpatel725-boop.github.io/ecommerce-frontend/
 
 Backend API
 
-https://ecommerce-backend-production-075f.up.railway.app/api/products
+https://ecommerce-backend-qh4p.onrender.com/api/products
 
 Swagger
 
-https://ecommerce-backend-production-075f.up.railway.app/swagger-ui/index.html
+https://ecommerce-backend-qh4p.onrender.com/swagger-ui/index.html
 
 Database
 

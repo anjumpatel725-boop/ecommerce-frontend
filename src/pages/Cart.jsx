@@ -18,7 +18,7 @@ export default function Cart() {
     try {
       const token = localStorage.getItem("token");
 
-      const res = await fetch(`https://ecommerce-backend-production-075f.up.railway.app/api/cart/${userId}`, {
+      const res = await fetch(`https://ecommerce-backend-qh4p.onrender.com/api/cart/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -43,7 +43,7 @@ export default function Cart() {
   const removeItem = async (cartId) => {
   const token = localStorage.getItem("token");
 
-  await fetch(`https://ecommerce-backend-production-075f.up.railway.app/api/cart/${cartId}`, {
+  await fetch(`https://ecommerce-backend-qh4p.onrender.com/api/cart/${cartId}`, {
     method: "DELETE",
     headers: {
   Authorization: `Bearer ${token}`
@@ -63,7 +63,7 @@ const payNow = async (item) => {
 
     // Address Check
     const addressRes = await axios.get(
-      `https://ecommerce-backend-production-075f.up.railway.app/api/address/${userId}`,
+      `https://ecommerce-backend-qh4p.onrender.com/api/address/${userId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`
@@ -107,7 +107,7 @@ const payNow = async (item) => {
     }
 
     await axios.post(
-      `https://ecommerce-backend-production-075f.up.railway.app/api/orders/${userId}/${item.id}`,
+      `https://ecommerce-backend-qh4p.onrender.com/api/orders/${userId}/${item.id}`,
       {},
       {
         headers: {
