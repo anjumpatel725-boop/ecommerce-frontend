@@ -1,37 +1,67 @@
-/* Full page */
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #eaeded;
-  font-family: Arial, sans-serif;
+body{
+
+margin:0;
+
+background:#eaeded;
+
+font-family:Arial;
+
 }
 
-/* Home container */
-.home-container {
-  width: 100%;
-  min-height: 100vh;
+.home-container{
+
+width:100%;
+
 }
 
-/* Product grid */
-.product-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 25px;
-  padding: 40px 20px;
+.product-grid{
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:25px;
+
+padding:40px;
+
 }
 
-/* Loading text */
-.loading {
-  text-align: center;
-  font-size: 24px;
-  margin-top: 50px;
+/* Laptop */
+
+@media(max-width:1200px){
+
+.product-grid{
+
+grid-template-columns:repeat(3,1fr);
+
 }
 
-/* No products found */
-.no-products {
-  text-align: center;
-  font-size: 22px;
-  color: gray;
-  margin-top: 40px;
+}
+
+/* Tablet */
+
+@media(max-width:768px){
+
+.product-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+padding:20px;
+
+}
+
+}
+
+/* Mobile */
+
+@media(max-width:480px){
+
+.product-grid{
+
+grid-template-columns:1fr;
+
+padding:15px;
+
+}
+
 }
