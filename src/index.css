@@ -14,3 +14,19 @@ body{
   background:#eaeded;
   overflow-x:hidden;
 }
+img{
+    max-width:100%;
+    display:block;
+}
+
+button{
+    cursor:pointer;
+}
+
+a{
+    text-decoration:none;
+}
+
+body{
+    overflow-x:hidden;
+}
