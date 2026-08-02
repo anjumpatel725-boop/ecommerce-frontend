@@ -1,6 +1,7 @@
 .hero-banner{
     height:500px;
     background-size:cover;
+    background-image: url("https://static.vecteezy.com/system/resources/thumbnails/050/532/704/small/a-store-with-many-electronic-devices-on-display-photo.jpg");
     background-position:center;
     position:relative;
 }
