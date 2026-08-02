@@ -42,12 +42,18 @@ export default function Home() {
       <Navbar />
       <HeroBanner />
 
-      <div id="products-section" className="product-grid">
-        {Array.isArray(products) &&
-  products.map((product, index) => (
-    <ProductCard key={index} product={product} />
-))}
-      </div>
+<div style={{marginTop:"30px"}}>
+    <div id="products-section" className="product-grid">
+        {products.map((product,index)=>(
+
+            <ProductCard
+                key={index}
+                product={product}
+            />
+
+        ))}
+    </div>
+</div>
 
       <Footer />
     </>

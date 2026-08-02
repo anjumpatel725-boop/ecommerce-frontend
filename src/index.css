@@ -1,15 +1,16 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
+html,body,#root{
+  width:100%;
+  min-height:100%;
 }
 
-#root {
-  width: 100%;
-  min-height: 100vh;
+body{
+  font-family:Arial,sans-serif;
+  background:#eaeded;
+  overflow-x:hidden;
 }
